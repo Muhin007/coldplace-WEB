@@ -11,9 +11,9 @@ public class ColdplaceServlet extends HttpServlet {
                       HttpServletResponse response) throws ServletException, IOException {
 
         String value = request.getParameter("key");
-        if (value != null)
+        if (value != null) {
             response.getWriter().println(value);
-
+        }
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
 
