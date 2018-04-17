@@ -9,7 +9,7 @@ public class Main {
         ColdplaceServlet coldplaceServlet = new ColdplaceServlet();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(coldplaceServlet), "/coldplaceweb");
+        context.addServlet(new ServletHolder(coldplaceServlet), "/coldplace");
 
         Server server = new Server(8080);
         server.setHandler(context);
@@ -19,3 +19,8 @@ public class Main {
         server.join();
     }
 }
+
+
+
+
+

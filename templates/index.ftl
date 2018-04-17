@@ -3,13 +3,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Сервлет</title>
+    <title>Coldplaceweb</title>
 </head>
 <body>
 
 <form action="ColdplaceServlet" method="POST">
-    <p>Введите имя пользователя: <input type="text" name="city"></p>
-    <input type="submit" value="Отправить" />
+    <p>Введите название города: <input type="text" name="city"></p>
+    <input type="submit" value="Отправить"/>
 </form>
 
 </body>
