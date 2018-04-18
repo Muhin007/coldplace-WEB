@@ -9,7 +9,7 @@ public class Main {
         ColdplaceServlet coldplaceServlet = new ColdplaceServlet();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(coldplaceServlet), "/coldplace");
+        context.addServlet(new ServletHolder(coldplaceServlet), "/*");
 
         Server server = new Server(8080);
         server.setHandler(context);

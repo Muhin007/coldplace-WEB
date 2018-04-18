@@ -7,24 +7,42 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("serial")
 public class ColdplaceServlet extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("UTF-8");
-        String city = request.getParameter("city");
+    public void doGet(HttpServletRequest request,
+                      HttpServletResponse response) throws IOException {
 
-        if (city != null) {
-            Map<String, Object> pageVariables = new HashMap<>();
-            pageVariables.put("name", city);
+        Map<String, Object> pageVariables = createPageVariablesMap(request);
+        pageVariables.put("name", "");
 
-            city = city.toUpperCase();
-            response.getWriter().println(PageGenerator.instance().getPage("index.ftl", pageVariables));
-            response.getWriter().println("<!DOCTYPE HTML>");
-            response.getWriter().println("<html><body><p>" + city + "</p></body></html>");
-        }
-        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+
+        response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
 
+    }
+
+    public void doPost(HttpServletRequest request,
+                       HttpServletResponse response) throws IOException {
+        Map<String, Object> pageVariables = createPageVariablesMap(request);
+
+        String name = request.getParameter("name");
+
+        response.setContentType("text/html;charset=utf-8");
+
+        if (name == null || name.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        } else {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+        pageVariables.put("name", name == null ? "" : name);
+
+        response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
+    }
+
+    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
+        Map<String, Object> pageVariables = new HashMap<>();
+        pageVariables.put("parameters", request.getParameterMap().toString());
+        return pageVariables;
     }
 }
