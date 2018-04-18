@@ -4,3 +4,4 @@ maven/maven.iml
 *.log
 *.jar
 *.war
+*.iml
