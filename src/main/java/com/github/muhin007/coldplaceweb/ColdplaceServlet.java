@@ -4,45 +4,67 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.PrintWriter;
+import java.sql.*;
+
 
 public class ColdplaceServlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws IOException {
+    private static final String url = "jdbc:mysql://localhost:3306/coldplace?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String user = "superuser";
+    private static final String password = "coldplaceweb";
 
-        Map<String, Object> pageVariables = createPageVariablesMap(request);
-        pageVariables.put("name", "");
+    private static Connection con;
+    private static Statement stmt;
+    private static ResultSet rs;
 
-        response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        PrintWriter writer = response.getWriter();
 
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
+        String title = "Список городов в БД";
+        String docType = "<!DOCTYPE html>";
 
-    }
+        String query = "select name from city";
 
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws IOException {
-        Map<String, Object> pageVariables = createPageVariablesMap(request);
+        {
 
-        String name = request.getParameter("name");
+            try {
 
-        response.setContentType("text/html;charset=utf-8");
+                con = DriverManager.getConnection(url, user, password);
 
-        if (name == null || name.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        } else {
-            response.setStatus(HttpServletResponse.SC_OK);
+                stmt = con.createStatement();
+
+                rs = stmt.executeQuery(query);
+
+                writer.println(docType + "<html><head><title>" + title + "</title></head><body>");
+                writer.println("<h1>Список городов в БД</h1>");
+                writer.println("<br/>");
+                while (rs.next()) {
+                    String name = rs.getString("name");
+                    writer.println(name + "<br/>");
+
+                }
+
+            } catch (SQLException sqlEx) {
+                sqlEx.printStackTrace();
+            } finally {
+
+                try {
+                    con.close();
+                } catch (SQLException se) {
+                }
+                try {
+                    stmt.close();
+                } catch (SQLException se) {
+                }
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                }
+                writer.println("</body></html>");
+            }
+
         }
-        pageVariables.put("name", name == null ? "" : name);
-
-        response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
-    }
-
-    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("parameters", request.getParameterMap().toString());
-        return pageVariables;
     }
 }
