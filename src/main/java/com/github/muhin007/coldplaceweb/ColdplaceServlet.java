@@ -14,10 +14,6 @@ public class ColdplaceServlet extends HttpServlet {
     private static final String user = "superuser";
     private static final String password = "coldplaceweb";
 
-    private static Connection con;
-    private static Statement stmt;
-    private static ResultSet rs;
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
@@ -29,13 +25,8 @@ public class ColdplaceServlet extends HttpServlet {
 
         {
 
-            try {
-
-                con = DriverManager.getConnection(url, user, password);
-
-                stmt = con.createStatement();
-
-                rs = stmt.executeQuery(query);
+            try (Connection con = DriverManager.getConnection(url, user, password);
+                 Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
 
                 writer.println(docType + "<html><head><title>" + title + "</title></head><body>");
                 writer.println("<h1>Список городов в БД</h1>");
@@ -48,23 +39,9 @@ public class ColdplaceServlet extends HttpServlet {
 
             } catch (SQLException sqlEx) {
                 sqlEx.printStackTrace();
-            } finally {
-
-                try {
-                    con.close();
-                } catch (SQLException se) {
-                }
-                try {
-                    stmt.close();
-                } catch (SQLException se) {
-                }
-                try {
-                    rs.close();
-                } catch (SQLException se) {
-                }
-                writer.println("</body></html>");
             }
-
+            writer.println("</body></html>");
         }
+
     }
 }
