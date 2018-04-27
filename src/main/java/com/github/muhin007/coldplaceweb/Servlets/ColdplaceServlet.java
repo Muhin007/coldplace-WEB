@@ -1,4 +1,4 @@
-package com.github.muhin007.coldplaceweb;
+package com.github.muhin007.coldplaceweb.Servlets;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
