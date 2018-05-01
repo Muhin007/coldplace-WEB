@@ -2,7 +2,6 @@ package com.github.muhin007.coldplaceweb;
 
 import com.github.muhin007.coldplaceweb.Servlets.ColdplaceServletButton;
 import com.github.muhin007.coldplaceweb.Servlets.ColdplaceServletSearchCity;
-
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
