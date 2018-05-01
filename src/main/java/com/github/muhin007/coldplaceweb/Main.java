@@ -14,7 +14,7 @@ public class Main {
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(coldplaceServletButton), "/button");
-        context.addServlet(new ServletHolder(coldplaceServletSearchCity), "/search");
+        context.addServlet(new ServletHolder(coldplaceServletSearchCity), "/*");
 
         Server server = new Server(8080);
         server.setHandler(context);
