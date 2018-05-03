@@ -27,16 +27,16 @@ public class ColdplaceServletSearchCity extends HttpServlet{
                        HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = createPageVariablesMap(request);
 
-        String name = request.getParameter("name");
+        String message = request.getParameter("name");
 
         response.setContentType("text/html;charset=utf-8");
 
-        if (name == null || name.isEmpty()) {
+        if (message == null || message.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         } else {
             response.setStatus(HttpServletResponse.SC_OK);
         }
-        pageVariables.put("name", name == null ? "" : name);
+        pageVariables.put("name", message == null ? "" : message);
 
         response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
     }
