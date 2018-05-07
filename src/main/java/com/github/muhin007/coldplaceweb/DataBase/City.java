@@ -1,10 +1,8 @@
 package com.github.muhin007.coldplaceweb.DataBase;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-class DBtoList {
+class City {
     private int id;
     private String name;
     private int mintemp;
@@ -32,22 +30,16 @@ class DBtoList {
         return id + " " + name + " " + mintemp + " " + maxtemp;
     }
 
-    public List<DBtoList> iDL() {
-        List<DBtoList> Drt = new ArrayList<>();
-        Drt.add(new DBtoList());
-        return Drt;
-    }
-
     public String getName() {
         return name;
     }
 
-    public int getMinTemp() {
+    private int getMinTemp() {
         return mintemp;
     }
 
 
-    public int getMaxTemp() {
+    private int getMaxTemp() {
         return maxtemp;
     }
 
@@ -57,8 +49,8 @@ class DBtoList {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DBtoList dBtoList = (DBtoList) o;
-        return name.equals(dBtoList.name);
+        City city = (City) o;
+        return name.equals(city.name);
     }
 
     @Override
