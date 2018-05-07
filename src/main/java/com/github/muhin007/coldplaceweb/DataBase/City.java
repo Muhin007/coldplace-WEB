@@ -5,42 +5,40 @@ import java.util.Random;
 class City {
     private int id;
     private String name;
-    private int mintemp;
-    private int maxtemp;
+    private int min;
+    private int max;
 
 
-    void setID(int id) {
-        this.id = id;
-    }
+    void setID(int id) { this.id = id; }
 
     void setName(String name) {
         this.name = name;
     }
 
-    void setMinTemp(int mintemp) {
-        this.mintemp = mintemp;
+    void setMin(int min) {
+        this.min = min;
     }
 
-    void setMaxTemp(int maxtemp) {
-        this.maxtemp = maxtemp;
+    void setMax(int max) {
+        this.max = max;
     }
 
     @Override
     public String toString() {
-        return id + " " + name + " " + mintemp + " " + maxtemp;
+        return id + " " + name + " " + min + " " + max;
     }
 
     public String getName() {
         return name;
     }
 
-    private int getMinTemp() {
-        return mintemp;
+    private int getMin() {
+        return min;
     }
 
 
-    private int getMaxTemp() {
-        return maxtemp;
+    private int getMax() {
+        return max;
     }
 
 
@@ -56,16 +54,16 @@ class City {
     @Override
     public int hashCode() {
         int result = name.hashCode();
-        result = 31 * result + mintemp;
-        result = 31 * result + maxtemp;
+        result = 31 * result + min;
+        result = 31 * result + max;
         return result;
     }
 
     public int calculateRandomTemperature() {
         Random r = new Random();
-        int mintemp = getMinTemp();
-        int maxtemp = getMaxTemp();
-        double d = (Math.abs((maxtemp - mintemp) * r.nextDouble()) + mintemp);
+        int min = getMin();
+        int max = getMax();
+        double d = (Math.abs((max - min) * r.nextDouble()) + min);
 
         return (int) d;
     }
