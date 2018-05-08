@@ -1,37 +1,37 @@
-package com.github.muhin007.coldplaceweb;
+package com.github.muhin007.coldplaceweb.DataBase;
+
 
 import java.sql.*;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class DBConnection {
+
     private static final String url = "jdbc:mysql://localhost:3306/coldplace?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String user = "superuser";
     private static final String password = "coldplaceweb";
-    private Connection con = null;
 
-    public Vector<Vector<Object>> getNomen(String query) {
-        Vector<Vector<Object>> retVector = new Vector<>();
+    public static void main(String[] args) {
         {
-
+            String query = "select * from city";
+            ArrayList<City> cities = null;
             try (Connection con = DriverManager.getConnection(url, user, password);
                  Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-                ResultSetMetaData rsmd = rs.getMetaData();
-                int cols = rsmd.getColumnCount();
+                cities = new ArrayList<>();
                 while (rs.next()) {
-                    Vector<Object> newRow = new Vector<>();
-                    for (int i = 1; i <= cols; i++) {
-                        newRow.add(rs.getObject(i));
-                    }
-                    retVector.add(newRow);
+                    City city = new City();
+                    city.setID(rs.getInt("id"));
+                    city.setName(rs.getString("name"));
+                    city.setMin(rs.getInt("min"));
+                    city.setMax(rs.getInt("max"));
+                    cities.add(city);
+
                 }
-            } catch (SQLException sqlEx)
 
-            {
-                sqlEx.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            return retVector;
+            System.out.println(cities);
         }
-
     }
 }
 
