@@ -2,7 +2,7 @@ package com.github.muhin007.coldplaceweb.DataBase;
 
 import java.util.Random;
 
-class City {
+public class City {
     private int id;
     private String name;
     private int min;

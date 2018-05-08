@@ -1,5 +1,6 @@
 package com.github.muhin007.coldplaceweb.Servlets;
 
+import com.github.muhin007.coldplaceweb.DataBase.City;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ColdplaceServletSearchCity extends HttpServlet{
+public class ColdplaceServletSearchCity extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
 
@@ -31,10 +32,21 @@ public class ColdplaceServletSearchCity extends HttpServlet{
 
         response.setContentType("text/html;charset=utf-8");
 
-        if (message == null || message.isEmpty()) {
+        Class<City> cities = City.class;
+        City foundedCity = null;
+        for (City city : cities)
+            if (message.equalsIgnoreCase(city.getName())) {
+                foundedCity = city;
+
+                break;
+            }
+
+        if (foundedCity == null || message.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            System.out.println("Вы не указали название города или его нет в списке");
         } else {
             response.setStatus(HttpServletResponse.SC_OK);
+            System.out.println("Сейчас в " + message + " " + foundedCity.calculateRandomTemperature());
         }
         pageVariables.put("name", message == null ? "" : message);
 
@@ -46,5 +58,6 @@ public class ColdplaceServletSearchCity extends HttpServlet{
         pageVariables.put("parameters", request.getParameterMap().toString());
         return pageVariables;
     }
+
 }
 

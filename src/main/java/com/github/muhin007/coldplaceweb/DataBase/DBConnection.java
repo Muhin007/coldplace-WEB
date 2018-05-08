@@ -10,30 +10,29 @@ public class DBConnection {
     private static final String user = "superuser";
     private static final String password = "coldplaceweb";
 
-    public static void main(String[] args) {
-        {
-            String query = "select * from city";
-            ArrayList<City> cities = null;
-            try (Connection con = DriverManager.getConnection(url, user, password);
-                 Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-                cities = new ArrayList<>();
-                while (rs.next()) {
-                    City city = new City();
-                    city.setID(rs.getInt("id"));
-                    city.setName(rs.getString("name"));
-                    city.setMin(rs.getInt("min"));
-                    city.setMax(rs.getInt("max"));
-                    cities.add(city);
+    {
+        String query = "select * from city";
+        ArrayList<City> cities = null;
+        try (Connection con = DriverManager.getConnection(url, user, password);
+             Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            cities = new ArrayList<>();
+            while (rs.next()) {
+                City city = new City();
+                city.setID(rs.getInt("id"));
+                city.setName(rs.getString("name"));
+                city.setMin(rs.getInt("min"));
+                city.setMax(rs.getInt("max"));
+                cities.add(city);
 
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
-            System.out.println(cities);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
     }
 }
+
 
 
 
