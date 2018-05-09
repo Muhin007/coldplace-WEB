@@ -3,6 +3,7 @@ package com.github.muhin007.coldplaceweb.DataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBConnection {
 
@@ -11,10 +12,12 @@ public class DBConnection {
     private static final String password = "coldplaceweb";
 
     {
+        // TODO
         String query = "select * from city";
-        ArrayList<City> cities = null;
+        List<City> cities = null;
         try (Connection con = DriverManager.getConnection(url, user, password);
-             Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
             cities = new ArrayList<>();
             while (rs.next()) {
                 City city = new City();
@@ -29,7 +32,7 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+return cities;
     }
 }
 

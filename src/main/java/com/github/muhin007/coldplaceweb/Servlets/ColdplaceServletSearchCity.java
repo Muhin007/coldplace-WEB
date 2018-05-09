@@ -34,7 +34,7 @@ public class ColdplaceServletSearchCity extends HttpServlet {
 
         Class<City> cities = City.class;
         City foundedCity = null;
-        for (City city : cities)
+        for (City city : cities){
             if (message.equalsIgnoreCase(city.getName())) {
                 foundedCity = city;
 
