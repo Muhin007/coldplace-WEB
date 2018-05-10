@@ -45,12 +45,12 @@ public class SearchCityColdplaceServlet extends HttpServlet {
         }
 
         if (foundedCity != null) {
-            System.out.println("Сейчас в " + message + " " + foundedCity.calculateRandomTemperature());
+            response.getWriter().println("Сейчас в " + message + " " + foundedCity.calculateRandomTemperature());
             return;
 
         } else {
             response.setStatus(HttpServletResponse.SC_OK);
-            System.out.println("Города нет в списке");
+            response.getWriter().println("Города нет в списке");
         }
         pageVariables.put("name", message == null ? "" : message);
 
