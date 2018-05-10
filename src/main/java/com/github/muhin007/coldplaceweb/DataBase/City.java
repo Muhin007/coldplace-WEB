@@ -15,12 +15,12 @@ public class City {
         this.name = name;
     }
 
-    void setMin(int min) {
-        this.min = min;
+    void setMinTemperature(int minTemperature) {
+        this.min = minTemperature;
     }
 
-    void setMax(int max) {
-        this.max = max;
+    void setMaxTemperature(int maxTemperature) {
+        this.max = maxTemperature;
     }
 
     @Override
@@ -32,12 +32,12 @@ public class City {
         return name;
     }
 
-    private int getMin() {
+    private int getMinTemperature() {
         return min;
     }
 
 
-    private int getMax() {
+    private int getMaxTemperature() {
         return max;
     }
 
@@ -61,9 +61,9 @@ public class City {
 
     public int calculateRandomTemperature() {
         Random r = new Random();
-        int min = getMin();
-        int max = getMax();
-        double d = (Math.abs((max - min) * r.nextDouble()) + min);
+        int minTemperature = getMinTemperature();
+        int maxTemperature = getMaxTemperature();
+        double d = (Math.abs((maxTemperature - minTemperature) * r.nextDouble()) + minTemperature);
 
         return (int) d;
     }
