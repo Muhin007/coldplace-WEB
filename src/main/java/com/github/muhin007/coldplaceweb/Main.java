@@ -1,7 +1,7 @@
 package com.github.muhin007.coldplaceweb;
 
 import com.github.muhin007.coldplaceweb.Servlets.ButtonColdplaceServlet;
-import com.github.muhin007.coldplaceweb.Servlets.ColdplaceServletSearchCity;
+import com.github.muhin007.coldplaceweb.Servlets.SearchCityColdplaceServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -11,7 +11,7 @@ public class Main {
        
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
-        context.addServlet(new ServletHolder(new ColdplaceServletSearchCity()), "/*");
+        context.addServlet(new ServletHolder(new SearchCityColdplaceServlet()), "/*");
 
         Server server = new Server(8080);
         server.setHandler(context);
