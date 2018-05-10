@@ -2,7 +2,7 @@ package com.github.muhin007.coldplaceweb.DataBase;
 
 import java.util.Random;
 
-public class City {
+public class Cities{
     private int id;
     private String name;
     private int min;
@@ -28,6 +28,8 @@ public class City {
         return id + " " + name + " " + min + " " + max;
     }
 
+    public int getID() {return id;}
+
     public String getName() {
         return name;
     }
@@ -35,7 +37,6 @@ public class City {
     private int getMinTemperature() {
         return min;
     }
-
 
     private int getMaxTemperature() {
         return max;
@@ -47,7 +48,7 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        City city = (City) o;
+        Cities city = (Cities) o;
         return name.equals(city.name);
     }
 
