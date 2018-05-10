@@ -11,8 +11,8 @@ public class DBConnection {
     private static final String user = "superuser";
     private static final String password = "coldplaceweb";
 
-    {
-        // TODO
+    public static List<City> ReadDB(String id, String name, int min, int max) {
+
         String query = "select * from city";
         List<City> cities = null;
         try (Connection con = DriverManager.getConnection(url, user, password);
@@ -23,8 +23,8 @@ public class DBConnection {
                 City city = new City();
                 city.setID(rs.getInt("id"));
                 city.setName(rs.getString("name"));
-                city.setMin(rs.getInt("min"));
-                city.setMax(rs.getInt("max"));
+                city.setMinTemperature(rs.getInt("min"));
+                city.setMaxTemperature(rs.getInt("max"));
                 cities.add(city);
 
             }
@@ -32,7 +32,7 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-return cities;
+        return cities;
     }
 }
 
