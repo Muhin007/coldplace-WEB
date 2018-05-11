@@ -8,8 +8,8 @@ import java.util.List;
 public class DBConnection {
 
     private static final String url = "jdbc:mysql://localhost:3306/coldplace?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private static final String user = "superuser";
-    private static final String password = "coldplaceweb";
+    private static final String user = "root";
+    private static final String password = "root";
 
     public static List<Cities> ReadDB() {
 
