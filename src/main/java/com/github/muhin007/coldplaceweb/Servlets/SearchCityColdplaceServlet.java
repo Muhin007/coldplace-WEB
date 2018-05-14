@@ -46,17 +46,17 @@ public class SearchCityColdplaceServlet extends HttpServlet {
 
         if (foundedCity != null) {
             response.getWriter().println("Сейчас в " + message + " " + foundedCity.calculateRandomTemperature());
+            response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+            response.setContentType("text/html;charset=utf-8");
             return;
 
         } else {
-            response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().println("Города нет в списке");
+            response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+            response.setContentType("text/html;charset=utf-8");
         }
-        pageVariables.put("name", message == null ? "" : message);
 
-        response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
     }
-
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
