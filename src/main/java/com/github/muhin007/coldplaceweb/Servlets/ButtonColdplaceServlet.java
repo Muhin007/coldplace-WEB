@@ -24,20 +24,17 @@ public class ButtonColdplaceServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<String, Object> pageVariables = createPageVariablesMap(request);
-        response.setContentType("text/html;charset=utf-8");
-        if (request.getParameter("PRESS")!= null) {
-                response.getWriter().println("тут будет показана температура");
-                response.setContentType("text/html;charset=utf-8");
+
+        response.getWriter().println("show low temperature");
+            response.setContentType("text/html;charset=utf-8");
             return;
-            }
-        else {
-            response.getWriter().println("ошибочка вышла");
+        }
+
+        private static Map<String, Object> createPageVariablesMap (HttpServletRequest request){
+            Map<String, Object> pageVariables = new HashMap<>();
+            pageVariables.put("PRESS", request.getParameterMap().toString());
+            return pageVariables;
         }
     }
-    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("PRESS", request.getParameterMap().toString());
-        return pageVariables;
-    }
-}
+
+
