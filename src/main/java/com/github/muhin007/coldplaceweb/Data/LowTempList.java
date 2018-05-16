@@ -1,7 +1,6 @@
 package com.github.muhin007.coldplaceweb.Data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class LowTempList {

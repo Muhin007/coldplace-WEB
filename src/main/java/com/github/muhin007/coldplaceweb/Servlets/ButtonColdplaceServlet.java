@@ -1,8 +1,5 @@
 package com.github.muhin007.coldplaceweb.Servlets;
 
-
-import com.github.muhin007.coldplaceweb.Data.Cities;
-import com.github.muhin007.coldplaceweb.Data.LowTempList;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
@@ -24,7 +21,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        response.getWriter().println(LowTempList);//TODO
+        response.getWriter().println("Show city name with low temperature");//TODO
         response.setContentType("text/html;charset=utf-8");
     }
 
