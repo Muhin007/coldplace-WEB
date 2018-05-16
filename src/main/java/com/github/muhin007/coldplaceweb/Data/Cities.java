@@ -1,4 +1,4 @@
-package com.github.muhin007.coldplaceweb.DataBase;
+package com.github.muhin007.coldplaceweb.Data;
 
 import java.util.Random;
 
