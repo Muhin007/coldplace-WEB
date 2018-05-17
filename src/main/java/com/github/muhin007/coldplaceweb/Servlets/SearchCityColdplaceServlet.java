@@ -1,6 +1,6 @@
 package com.github.muhin007.coldplaceweb.Servlets;
 
-import com.github.muhin007.coldplaceweb.Data.Cities;
+import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.DBConnection;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 
@@ -34,9 +34,9 @@ public class SearchCityColdplaceServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=utf-8");
 
-        List<Cities> cities = DBConnection.ReadDB();
-            Cities foundedCity = null;
-        for (Cities city : cities) {
+        List<City> cities = DBConnection.readDB();
+            City foundedCity = null;
+        for (City city : cities) {
             if (message.equalsIgnoreCase(city.getName())) {
                 foundedCity = city;
 
