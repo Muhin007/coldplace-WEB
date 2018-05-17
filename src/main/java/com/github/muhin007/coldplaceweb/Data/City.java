@@ -2,7 +2,7 @@ package com.github.muhin007.coldplaceweb.Data;
 
 import java.util.Random;
 
-public class Cities{
+public class City {
     private int id;
     private String name;
     private int min;
@@ -48,7 +48,7 @@ public class Cities{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Cities city = (Cities) o;
+        City city = (City) o;
         return name.equals(city.name);
     }
 
