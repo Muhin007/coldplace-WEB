@@ -11,16 +11,16 @@ public class DBConnection {
     private static final String user = "root";
     private static final String password = "root";
 
-    public static List<Cities> ReadDB() {
+    public static List<City> readDB() {
 
         String query = "select * from city";
-        List<Cities> cities = null;
+        List<City> cities = null;
         try (Connection con = DriverManager.getConnection(url, user, password);
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             cities = new ArrayList<>();
             while (rs.next()) {
-                Cities city = new Cities();
+                City city = new City();
                 city.setID(rs.getInt("id"));
                 city.setName(rs.getString("name"));
                 city.setMinTemperature(rs.getInt("min"));
