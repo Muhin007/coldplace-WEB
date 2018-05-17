@@ -42,7 +42,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
             }
         }
 
-        response.getWriter().println("In " + coldestCity.getName() + " " + min);//TODO
+        response.getWriter().println("In " + coldestCity.getName() + " " + min);
         response.setContentType("text/html;charset=utf-8");
     }
 
