@@ -1,14 +1,18 @@
-package com.github.muhin007.coldplaceweb;
+package com.github.muhin007.coldplaceweb.Servlets;
+
+import com.github.muhin007.coldplaceweb.Data.City;
+import com.github.muhin007.coldplaceweb.Data.DBConnection;
+import com.github.muhin007.coldplaceweb.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ColdplaceServlet extends HttpServlet {
-
+public class SearchCityColdplaceServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
 
@@ -26,18 +30,32 @@ public class ColdplaceServlet extends HttpServlet {
                        HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = createPageVariablesMap(request);
 
-        String name = request.getParameter("name");
+        String message = request.getParameter("name");
 
         response.setContentType("text/html;charset=utf-8");
 
-        if (name == null || name.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        } else {
-            response.setStatus(HttpServletResponse.SC_OK);
-        }
-        pageVariables.put("name", name == null ? "" : name);
+        List<City> cities = DBConnection.readDB();
+            City foundedCity = null;
+        for (City city : cities) {
+            if (message.equalsIgnoreCase(city.getName())) {
+                foundedCity = city;
 
-        response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
+                break;
+            }
+        }
+
+        if (foundedCity != null) {
+            response.getWriter().println("Сейчас в " + message + " " + foundedCity.calculateRandomTemperature());
+            response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+            response.setContentType("text/html;charset=utf-8");
+            return;
+
+        } else {
+            response.getWriter().println("Города нет в списке");
+            response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+            response.setContentType("text/html;charset=utf-8");
+        }
+
     }
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
@@ -45,4 +63,7 @@ public class ColdplaceServlet extends HttpServlet {
         pageVariables.put("parameters", request.getParameterMap().toString());
         return pageVariables;
     }
+
 }
+
+
