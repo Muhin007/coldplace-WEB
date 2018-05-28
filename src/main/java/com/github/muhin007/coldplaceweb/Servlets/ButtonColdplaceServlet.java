@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +28,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<CityWithTemp> citiesWithTemps = new ArrayList<>();
         List<City> cities = DBConnection.readDB();
-        for (int i = 0; i < cities.size(); i++) {
-            City currentCity = cities.get(i);
+        for (City currentCity : cities) {
             int t = currentCity.calculateRandomTemperature();
             citiesWithTemps.add(new CityWithTemp(currentCity, t));
         }
@@ -40,12 +40,15 @@ public class ButtonColdplaceServlet extends HttpServlet {
                 min = t;
                 coldestCity = citiesWithTemps.get(i).city;
             }
-        }
 
-        response.getWriter().println("In " + coldestCity.getName() + " " + min);
+        }
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("В " + coldestCity.getName() + " " + min);
         response.setContentType("text/html;charset=utf-8");
     }
 
 }
+
 
 
