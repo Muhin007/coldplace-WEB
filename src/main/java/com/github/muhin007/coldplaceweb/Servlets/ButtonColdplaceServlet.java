@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ButtonColdplaceServlet extends HttpServlet {
@@ -26,6 +26,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String, Object> pageVariables = createPageVariablesMap(request);
         List<CityWithTemp> citiesWithTemps = new ArrayList<>();
         List<City> cities = DBConnection.readDB();
         for (City currentCity : cities) {
@@ -42,12 +43,21 @@ public class ButtonColdplaceServlet extends HttpServlet {
             }
 
         }
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("В " + coldestCity.getName() + " " + min);
+        response.getWriter().println(PageGenerator.instance().getPage("answerButtonPage.html", pageVariables));
         response.setContentType("text/html;charset=utf-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setAttribute("cityName", coldestCity.getName());
+        request.setAttribute("minTemp", min);
+      //  PrintWriter out = response.getWriter();
+        //out.println("В " + coldestCity.getName() + " " + min);
+       // response.setContentType("text/html;charset=utf-8");
     }
-
+    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
+        Map<String, Object> pageVariables = new HashMap<>();
+        pageVariables.put("cityName", request.getAttribute("cityName"));
+        pageVariables.put("minTemp", request.getAttribute("minTemp"));
+        return pageVariables;
+    }
 }
 
 
