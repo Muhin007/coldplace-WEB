@@ -19,14 +19,16 @@ public class ButtonColdplaceServlet extends HttpServlet {
 
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        response.getWriter().println(PageGenerator.instance().getPage("ButtonPage.html", new HashMap<>()));
+        Map<String, Object> pageVariables = createPageVariablesMap(request);
+        response.getWriter().println(PageGenerator.instance().getPage("ButtonPage.html", pageVariables));
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = createPageVariablesMap(request);
+
         List<CityWithTemp> citiesWithTemps = new ArrayList<>();
         List<City> cities = DBConnection.readDB();
         for (City currentCity : cities) {
@@ -43,19 +45,15 @@ public class ButtonColdplaceServlet extends HttpServlet {
             }
 
         }
-        response.getWriter().println(PageGenerator.instance().getPage("answerButtonPage.html", pageVariables));
+
         response.setContentType("text/html;charset=utf-8");
-        response.setCharacterEncoding("UTF-8");
-        request.setAttribute("cityName", coldestCity.getName());
-        request.setAttribute("minTemp", min);
-      //  PrintWriter out = response.getWriter();
-        //out.println("В " + coldestCity.getName() + " " + min);
-       // response.setContentType("text/html;charset=utf-8");
+        pageVariables.put("cityName", coldestCity.getName());
+        pageVariables.put("minTemp", min);
+        response.getWriter().println(PageGenerator.instance().getPage("AnswerButtonPage.html", pageVariables));
     }
+
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("cityName", request.getAttribute("cityName"));
-        pageVariables.put("minTemp", request.getAttribute("minTemp"));
         return pageVariables;
     }
 }
