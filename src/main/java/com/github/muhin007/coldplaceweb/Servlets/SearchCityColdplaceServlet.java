@@ -4,6 +4,7 @@ import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.DBConnection;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,7 @@ public class SearchCityColdplaceServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
 
         List<City> cities = DBConnection.readDB();
-            City foundedCity = null;
+        City foundedCity = null;
         for (City city : cities) {
             if (message.equalsIgnoreCase(city.getName())) {
                 foundedCity = city;
@@ -45,15 +46,18 @@ public class SearchCityColdplaceServlet extends HttpServlet {
         }
 
         if (foundedCity != null) {
-            response.getWriter().println("Сейчас в " + message + " " + foundedCity.calculateRandomTemperature());
-            response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+
             response.setContentType("text/html;charset=utf-8");
+            pageVariables.put("cityName", message);
+            pageVariables.put("minTemp", foundedCity.calculateRandomTemperature());
+            response.getWriter().println(PageGenerator.instance().getPage("answerSearchCity.html", pageVariables));
             return;
 
         } else {
-            response.getWriter().println("Города нет в списке");
-            response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
             response.setContentType("text/html;charset=utf-8");
+            pageVariables.put("cityNotFound", "Города нет в списке");
+            response.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+
         }
 
     }
