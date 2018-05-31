@@ -39,10 +39,13 @@ public class URLColdplaceServlet extends HttpServlet {
                 new InputStreamReader(coldplace.openStream()));
 
         String inputLine;
-        while ((inputLine = in.readLine()) != null)
+        int n;
+        while ((inputLine = in.readLine()) != null) {
+            n = inputLine.length();
             response.setContentType("text/html;charset=utf-8");
-        pageVariables.put("htmlForm", inputLine);
-        response.getWriter().println(PageGenerator.instance().getPage("URLReadPage.html", pageVariables));
+            pageVariables.put("htmlForm", n);
+            response.getWriter().println(PageGenerator.instance().getPage("summString.html", pageVariables));
+        }
         in.close();
     }
 
