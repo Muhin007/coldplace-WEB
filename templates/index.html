@@ -9,5 +9,23 @@
     Enter the name of the city: <input type="text" name="name"/>
     <input type="submit" value="Ok">
 </form>
+${cityNotFound}<#if cityNotFound == "Города нет в списке">
+<p>Города доступные для просмотра</p>
+<ul>
+    <li>Москва</li>
+    <li>Челябинск</li>
+    <li>Санкт-Петербург</li>
+    <li>Новосибирск</li>
+    <li>Магадан</li>
+    <li>Сочи</li>
+    <li>Казань</li>
+    <li>Нижний Новгород</li>
+    <li>Омск</li>
+    <li>Екатеринбург</li>
+    <li>Тюмень</li>
+    <li>Барнаул</li>
+    <li>Владивосток</li>
+</ul>
+</#if>
 </body>
 </html>
