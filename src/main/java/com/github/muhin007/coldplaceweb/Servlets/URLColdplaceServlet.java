@@ -35,19 +35,22 @@ public class URLColdplaceServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
 
         URL coldplace = new URL(message);
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(coldplace.openStream()));
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(
+                new InputStreamReader(coldplace.openStream()))) {
 
-        String inputLine;
-        int n;
-        while ((inputLine = in.readLine()) != null) {
-            n = inputLine.length();
-            response.setContentType("text/html;charset=utf-8");
-            pageVariables.put("htmlForm", n);
-            response.getWriter().println(PageGenerator.instance().getPage("summString.html", pageVariables));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                sb.append(inputLine.replaceAll(" ", " "));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        in.close();
+        response.setContentType("text/html;charset=utf-8");
+        pageVariables.put("lengthOfString", sb.toString().length());
+        response.getWriter().println(PageGenerator.instance().getPage("summString.html", pageVariables));
     }
+
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
