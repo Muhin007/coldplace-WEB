@@ -1,5 +1,6 @@
 package com.github.muhin007.coldplaceweb.Servlets;
 
+import com.github.muhin007.coldplaceweb.Action;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
@@ -13,16 +14,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class URLColdplaceServlet extends HttpServlet {
+    class ActionImpl implements Action {
+
+        @Override
+        public void action(HttpServletRequest request, HttpServletResponse response) throws IOException {
+            Map<String, Object> pageVariables = createPageVariablesMap(request);
+            pageVariables.put("URL", "");
+            response.getWriter().println(PageGenerator.instance().getPage("URLReadPage.html", pageVariables));
+        }
+    }
+
+    static void process(HttpServletRequest request,
+                        HttpServletResponse response, Action action) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+
+        action.action(request, response);
+
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
+
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
 
-        Map<String, Object> pageVariables = createPageVariablesMap(request);
-        pageVariables.put("URL", "");
+        URLColdplaceServlet.process(request, response,  (HttpServletRequest req, HttpServletResponse resp) -> {
+                Map<String, Object> pageVariables = createPageVariablesMap(req);
+                pageVariables.put("URL", "");
+                resp.getWriter().println(PageGenerator.instance().getPage("URLReadPage.html", pageVariables));
+            }
+        );
 
-        response.getWriter().println(PageGenerator.instance().getPage("URLReadPage.html", pageVariables));
-
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
 
     }
 
@@ -41,13 +62,14 @@ public class URLColdplaceServlet extends HttpServlet {
 
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                sb.append(inputLine.replaceAll(" ", " "));
+                sb.append(inputLine.replaceAll(" ", ""));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         response.setContentType("text/html;charset=utf-8");
         pageVariables.put("lengthOfString", sb.toString().length());
+        response.setCharacterEncoding("UTF-8");
         response.getWriter().println(PageGenerator.instance().getPage("summString.html", pageVariables));
     }
 
