@@ -24,8 +24,9 @@ public class URLColdplaceServlet extends HttpServlet {
         }
     }
 
-    static void process(HttpServletRequest request,
-                        HttpServletResponse response, Action action) throws IOException {
+
+    private static void process(HttpServletRequest request,
+                                HttpServletResponse response, Action action) throws IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
 
