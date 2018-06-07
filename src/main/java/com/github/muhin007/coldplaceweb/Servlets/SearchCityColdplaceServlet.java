@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class SearchCityColdplaceServlet extends HttpServlet {
 
-    static void process(HttpServletRequest request,
-                        HttpServletResponse response, Action action) throws IOException {
+    private static void process(HttpServletRequest request,
+                                HttpServletResponse response, Action action) throws IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
 
@@ -61,7 +61,6 @@ public class SearchCityColdplaceServlet extends HttpServlet {
                         pageVariables.put("minTemp", foundedCity.calculateRandomTemperature());
                         resp.getWriter().println(PageGenerator.instance().getPage("answerSearchCity.html",
                                 pageVariables));
-                        return;
 
                     } else {
                         pageVariables.put("cityNotFound", "Города нет в списке");
