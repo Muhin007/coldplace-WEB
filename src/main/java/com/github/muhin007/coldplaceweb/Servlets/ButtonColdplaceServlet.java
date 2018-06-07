@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class ButtonColdplaceServlet extends HttpServlet {
 
-    static void process(HttpServletRequest request,
-                        HttpServletResponse response, Action action) throws IOException {
+    private static void process(HttpServletRequest request,
+                                HttpServletResponse response, Action action) throws IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
 
@@ -28,7 +28,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ButtonColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+                    Map<String, Object> pageVariables = createPageVariablesMap();
                     resp.getWriter().println(PageGenerator.instance().getPage("buttonPage.html", pageVariables));
                 }
         );
@@ -37,7 +37,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ButtonColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+                    Map<String, Object> pageVariables = createPageVariablesMap();
 
                     List<City> cities = DBConnection.readDB();
                     City coldestCity = cities.get(0);
@@ -61,9 +61,8 @@ public class ButtonColdplaceServlet extends HttpServlet {
 
     }
 
-    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
-        Map<String, Object> pageVariables = new HashMap<>();
-        return pageVariables;
+    private static Map<String, Object> createPageVariablesMap() {
+        return new HashMap<>();
     }
 }
 
