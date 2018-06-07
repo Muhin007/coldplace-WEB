@@ -49,30 +49,26 @@ public class URLColdplaceServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
-        Map<String, Object> pageVariables = createPageVariablesMap(request);
+        URLColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
+            Map<String, Object> pageVariables = createPageVariablesMap(req);
+            String message = req.getParameter("URL");
+                        URL coldplace = new URL(message);
+                    StringBuilder sb = new StringBuilder();
+                    try (BufferedReader in = new BufferedReader(
+                            new InputStreamReader(coldplace.openStream()))) {
 
-        String message = request.getParameter("URL");
-
-        response.setContentType("text/html;charset=utf-8");
-
-        URL coldplace = new URL(message);
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(
-                new InputStreamReader(coldplace.openStream()))) {
-
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                sb.append(inputLine.replaceAll(" ", ""));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+                        String inputLine;
+                        while ((inputLine = in.readLine()) != null) {
+                            sb.append(inputLine.replaceAll(" ", ""));
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    pageVariables.put("lengthOfString", sb.toString().length());
+                    resp.getWriter().println(PageGenerator.instance().getPage("summString.html", pageVariables));
         }
-        response.setContentType("text/html;charset=utf-8");
-        pageVariables.put("lengthOfString", sb.toString().length());
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().println(PageGenerator.instance().getPage("summString.html", pageVariables));
-    }
-
+        );
+}
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
