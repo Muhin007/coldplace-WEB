@@ -7,6 +7,7 @@ public class City {
     private String name;
     private int min;
     private int max;
+    private  String url;
 
 
     void setID(int id) { this.id = id; }
@@ -22,6 +23,8 @@ public class City {
     void setMaxTemperature(int maxTemperature) {
         this.max = maxTemperature;
     }
+
+    void setURL (String url) {this.url = url;}
 
     @Override
     public String toString() {
@@ -41,6 +44,8 @@ public class City {
     private int getMaxTemperature() {
         return max;
     }
+
+    public String getUrl() {return url; }
 
 
     @Override

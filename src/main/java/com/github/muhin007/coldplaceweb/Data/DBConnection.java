@@ -25,6 +25,7 @@ public class DBConnection {
                 city.setName(rs.getString("name"));
                 city.setMinTemperature(rs.getInt("min"));
                 city.setMaxTemperature(rs.getInt("max"));
+                city.setURL(rs.getString("url"));
                 cities.add(city);
 
             }
