@@ -33,7 +33,7 @@ public class URLColdplaceServlet extends HttpServlet {
 
         URLColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
-                    pageVariables.put("name", "");
+                    pageVariables.put("cityName", "");
                     resp.getWriter().println(PageGenerator.instance().getPage("URLReadPage.html", pageVariables));
                 }
         );
@@ -45,7 +45,7 @@ public class URLColdplaceServlet extends HttpServlet {
         URLColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
-                    String message = req.getParameter("name");
+                    String message = req.getParameter("cityName");
 
                     List<City> cities = DBConnection.readDB();
                     City foundedCity = null;
