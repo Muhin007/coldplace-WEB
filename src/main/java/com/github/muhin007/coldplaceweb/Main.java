@@ -1,7 +1,9 @@
 package com.github.muhin007.coldplaceweb;
 
+
 import com.github.muhin007.coldplaceweb.Servlets.ButtonColdplaceServlet;
 import com.github.muhin007.coldplaceweb.Servlets.SearchCityColdplaceServlet;
+import com.github.muhin007.coldplaceweb.Servlets.URLColdplaceServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -11,10 +13,12 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-       
+
+
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
         context.addServlet(new ServletHolder(new SearchCityColdplaceServlet()), "/*");
+        context.addServlet(new ServletHolder(new URLColdplaceServlet()), "/URLRead");
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setResourceBase("templates");
