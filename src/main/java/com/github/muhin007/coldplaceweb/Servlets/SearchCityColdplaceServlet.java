@@ -1,9 +1,10 @@
 package com.github.muhin007.coldplaceweb.Servlets;
 
-import com.github.muhin007.coldplaceweb.Action;
+
 import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.DBConnection;
 import com.github.muhin007.coldplaceweb.PageGenerator;
+import com.github.muhin007.coldplaceweb.Process;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,20 +16,12 @@ import java.util.Map;
 
 public class SearchCityColdplaceServlet extends HttpServlet {
 
-    private static void process(HttpServletRequest request,
-                                HttpServletResponse response, Action action) throws IOException {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=utf-8");
-
-        action.action(request, response);
-
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
 
-        SearchCityColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
+        Process.process(HttpServletRequest request, HttpServletRequest response, (HttpServletRequest req,
+                                                                                  HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
                     pageVariables.put("name", "");
                     resp.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
@@ -39,11 +32,12 @@ public class SearchCityColdplaceServlet extends HttpServlet {
 
 
     public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws IOException {
-        SearchCityColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
+                       HttpServletResponse response) throws IOException{
+        Process.process(HttpServletRequest request, HttpServletRequest response, (HttpServletRequest req,
+                                                                                  HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
-                    String message = request.getParameter("name");
+                    String message = req.getParameter("name");
 
                     List<City> cities = DBConnection.readDB();
                     City foundedCity = null;

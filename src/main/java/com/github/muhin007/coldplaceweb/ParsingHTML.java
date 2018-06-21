@@ -14,7 +14,8 @@ public class ParsingHTML {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Elements title = doc.select("div [id=forecastShort-content]");
+        Elements title;
+        title = doc.select("div [id=forecastShort-content]").last().select("b");
 
         System.out.println(title);
 
