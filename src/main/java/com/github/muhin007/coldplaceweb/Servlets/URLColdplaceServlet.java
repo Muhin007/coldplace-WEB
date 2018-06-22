@@ -4,14 +4,13 @@ import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.DBConnection;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,21 +50,21 @@ public class URLColdplaceServlet extends HttpServlet {
                     if (foundedCity != null) {
 
                         String url = foundedCity.getUrl();
-                        URL coldplace = new URL(url);
-                        StringBuilder sb = new StringBuilder();
-                        try (BufferedReader in = new BufferedReader(
-                                new InputStreamReader(coldplace.openStream()))) {
-
-                            String inputLine;
-                            while ((inputLine = in.readLine()) != null) {
-                                sb.append(inputLine.replaceAll(" ", ""));
-                            }
+                        Document doc = null;
+                        try {
+                            doc = Jsoup.connect(url).get();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        pageVariables.put("lengthOfString", sb.toString().length());
-                        resp.getWriter().println(PageGenerator.instance().getPage("summString.html", pageVariables));
+                        String title = doc.select("div [id=ArchTemp]").select("div *").
+                                select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
+
+                        pageVariables.put("cityName", message);
+                        pageVariables.put("cityTemp", title);
+                        resp.getWriter().println(PageGenerator.instance().
+                                getPage("URLReadPage.html", pageVariables));
                     }
+
                 }
         );
     }
