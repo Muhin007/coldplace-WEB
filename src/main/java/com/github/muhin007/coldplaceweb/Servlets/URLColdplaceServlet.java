@@ -62,7 +62,7 @@ public class URLColdplaceServlet extends HttpServlet {
                         pageVariables.put("cityName", message);
                         pageVariables.put("cityTemp", title);
                         resp.getWriter().println(PageGenerator.instance().
-                                getPage("URLReadPage.html", pageVariables));
+                                getPage("URLReadPageResult.html", pageVariables));
                     }
 
                 }
@@ -70,10 +70,11 @@ public class URLColdplaceServlet extends HttpServlet {
     }
 
 
-    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
+    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request){
         Map<String, Object> pageVariables = new HashMap<>();
         pageVariables.put("parameters", request.getParameterMap().toString());
         return pageVariables;
+
     }
 
 }
