@@ -2,6 +2,7 @@ package com.github.muhin007.coldplaceweb.Servlets;
 
 import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.DBConnection;
+import com.github.muhin007.coldplaceweb.Data.WriteDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
 import org.jsoup.Jsoup;
@@ -58,12 +59,14 @@ public class URLColdplaceServlet extends HttpServlet {
                         }
                         String title = doc.select("div [id=ArchTemp]").select("div *").
                                 select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
-
+                        WriteDB.city = message;
+                        WriteDB.temp = title;
                         pageVariables.put("cityName", message);
                         pageVariables.put("cityTemp", title);
                         resp.getWriter().println(PageGenerator.instance().
-                                getPage("URLReadPage.html", pageVariables));
+                                getPage("URLReadPageAnswer.html", pageVariables));
                     }
+
 
                 }
         );
