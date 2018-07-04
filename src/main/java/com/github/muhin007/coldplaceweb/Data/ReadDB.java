@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBConnection {
+public class ReadDB {
 
     public static List<City> readDB() {
 
