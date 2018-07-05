@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -66,19 +67,19 @@ public class URLColdplaceServlet extends HttpServlet {
                         title = doc.select("div [id=ArchTemp]").select("div *").
                                 select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
 
-                        String query = "INSERT INTO coldplace.citytemp (id, city, temp) \n" +
+                        String query = "INSERT INTO coldplace.citytemp (city, temp, date) \n" +
                                 " VALUES (?, ?, ?);";
+                        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
                         try (Connection con = DBService.getConnection();
-                             Statement stmt = con.createStatement()) {
-                            PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(query);
-                            preparedStmt.setInt (1, '1');
-                            preparedStmt.setString (2, message);
-                            preparedStmt.setString   (3, title);
+                             PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(query)) {
 
-                            preparedStmt.execute();
+                            preparedStmt.setString(1, message);
+                            preparedStmt.setString(2, title);
+                            preparedStmt.setObject(3, date);
 
-                            con.close();
-                            stmt.executeUpdate(query);
+
+                            preparedStmt.executeUpdate();
+                            System.out.println("В БД добавлена запись: " + message + " " + title + " " + date);
 
                         } catch (SQLException e) {
                             e.printStackTrace();

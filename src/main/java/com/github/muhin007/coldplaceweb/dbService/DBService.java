@@ -1,5 +1,6 @@
 package com.github.muhin007.coldplaceweb.dbService;
 
+
 import org.h2.jdbcx.JdbcDataSource;
 
 import java.sql.Connection;
@@ -16,7 +17,7 @@ public class DBService {
 
     public static Connection getConnection() {
         try {
-            String url = "jdbc:mysql://localhost:3306/coldplace?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://localhost:3306/coldplace?useUnicode=true&characterEncoding=utf8";
             String name = "root";
             String pass = "root";
 
