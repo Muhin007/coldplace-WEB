@@ -1,7 +1,7 @@
 package com.github.muhin007.coldplaceweb.Servlets;
 
 import com.github.muhin007.coldplaceweb.Data.City;
-import com.github.muhin007.coldplaceweb.Data.DBConnection;
+import com.github.muhin007.coldplaceweb.Data.ReadDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
 
@@ -30,7 +30,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap();
 
-                    List<City> cities = DBConnection.readDB();
+                    List<City> cities = ReadDB.readDB();
                     City coldestCity = cities.get(0);
                     int min = coldestCity.calculateRandomTemperature();
 

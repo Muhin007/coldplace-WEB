@@ -2,10 +2,10 @@ package com.github.muhin007.coldplaceweb.Servlets;
 
 import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.ReadDB;
-import com.github.muhin007.coldplaceweb.Data.WriteDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
-import com.github.muhin007.coldplaceweb.dbService.UsersDAO;
+import com.github.muhin007.coldplaceweb.dbService.DBService;
+import com.mysql.jdbc.PreparedStatement;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -13,13 +13,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class URLColdplaceServlet extends HttpServlet {
 
-    public static String message;
+    private static String message;
+    private static String title;
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
@@ -59,9 +63,27 @@ public class URLColdplaceServlet extends HttpServlet {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        String title = doc.select("div [id=ArchTemp]").select("div *").
+                        title = doc.select("div [id=ArchTemp]").select("div *").
                                 select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
-                        WriteDB.WriteDB(message, title);
+
+                        String query = "INSERT INTO coldplace.citytemp (id, city, temp) \n" +
+                                " VALUES (?, ?, ?);";
+                        try (Connection con = DBService.getConnection();
+                             Statement stmt = con.createStatement()) {
+                            PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(query);
+                            preparedStmt.setInt (1, '1');
+                            preparedStmt.setString (2, message);
+                            preparedStmt.setString   (3, title);
+
+                            preparedStmt.execute();
+
+                            con.close();
+                            stmt.executeUpdate(query);
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
                         pageVariables.put("cityName", message);
                         pageVariables.put("cityTemp", title);
                         resp.getWriter().println(PageGenerator.instance().
