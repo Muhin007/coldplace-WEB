@@ -15,11 +15,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class URLColdplaceServlet extends HttpServlet {
 
-    public static String message;
+    public static String cityName;
     public static String title;
+    public static int cityTemp;
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
@@ -38,12 +40,12 @@ public class URLColdplaceServlet extends HttpServlet {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
-                    message = req.getParameter("cityName");
+                    cityName = req.getParameter("cityName");
 
                     List<City> cities = ReadDB.readDB();
                     City foundedCity = null;
                     for (City city : cities) {
-                        if (message.equalsIgnoreCase(city.getName())) {
+                        if (cityName.equalsIgnoreCase(city.getName())) {
                             foundedCity = city;
 
                             break;
@@ -57,15 +59,27 @@ public class URLColdplaceServlet extends HttpServlet {
                         try {
                             doc = Jsoup.connect(url).get();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Map<String, Object> pageVariablesEx = createPageVariablesMap(request);
+                            pageVariablesEx.put("exceptionText", "Не получилось распознать страницу." +
+                                    " Введите другой URL");
+                            response.getWriter().println(PageGenerator.instance().
+                                    getPage("exceptions.html", pageVariables));
                         }
                         title = doc.select("div [id=ArchTemp]").select("div *").
                                 select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
 
+                       try {
+                           Scanner s = new Scanner(title);
+                           cityTemp = s.nextInt();
+                       } catch(java.util.NoSuchElementException e){
+                           System.out.println("нет данных о температуре");
+                       }
+
+
                         WriteToDB.writeToDB();
 
-                        pageVariables.put("cityName", message);
-                        pageVariables.put("cityTemp", title);
+                        pageVariables.put("cityName", cityName);
+                        pageVariables.put("cityTemp", cityTemp);
                         resp.getWriter().println(PageGenerator.instance().
                                 getPage("URLReadPageAnswer.html", pageVariables));
 

@@ -2,7 +2,6 @@ package com.github.muhin007.coldplaceweb.Data;
 
 import com.github.muhin007.coldplaceweb.Servlets.URLColdplaceServlet;
 import com.github.muhin007.coldplaceweb.dbService.DBService;
-import com.github.muhin007.coldplaceweb.dbService.executor.Executor;
 import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.Connection;
@@ -17,14 +16,14 @@ public class WriteToDB {
         try (Connection con = DBService.getConnection();
              PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(query)) {
 
-            preparedStmt.setString(1, URLColdplaceServlet.message);
-            preparedStmt.setString(2, URLColdplaceServlet.title);
+            preparedStmt.setString(1, URLColdplaceServlet.cityName);
+            preparedStmt.setInt(2, URLColdplaceServlet.cityTemp);
             preparedStmt.setObject(3, date);
 
 
             preparedStmt.executeUpdate();
-            System.out.println("В БД добавлена запись: " + URLColdplaceServlet.message + " "
-                    + URLColdplaceServlet.title + " " + date);
+            System.out.println("В БД добавлена запись: " + URLColdplaceServlet.cityName + " "
+                    + URLColdplaceServlet.cityTemp + " " + date);
 
         } catch (SQLException e) {
             e.printStackTrace();
