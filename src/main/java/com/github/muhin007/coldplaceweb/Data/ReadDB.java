@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ReadDB {
 
-    public static List<City> readDB() {
+    public static List<City> readCityFromDB() {
 
         String query = "select * from city";
         List<City> cities = null;
@@ -29,9 +29,31 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           System.out.println("нет подключения к БД");
         }
         return cities;
+    }
+    public  static List<Temp> readTempFromDB(){
+        String query = "select * from cityTemp";
+        List<Temp> temps = null;
+        try (Connection con = DBService.getConnection();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            temps = new ArrayList<>();
+            while (rs.next()) {
+                Temp temp = new Temp();
+                temp.setID(rs.getInt("id"));
+                temp.setCity(rs.getString("city"));
+                temp.setTemp(rs.getInt("temp"));
+                temp.setDate(rs.getString("date"));
+                temps.add(temp);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("нет подключения к БД");
+        }
+        return temps;
     }
 
 }

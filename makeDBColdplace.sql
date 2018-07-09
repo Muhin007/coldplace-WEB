@@ -12,7 +12,7 @@ FLUSH PRIVILEGES;
 GRANT ALL PRIVILEGES ON * . * TO 'root'@'localhost';
 FLUSH PRIVILEGES;
 
-CREATE TABLE coldplace.citytemp (id bigint(20) NOT NULL AUTO_INCREMENT,	city varchar(100) NOT NULL,	temp INT(10)
-NOT NULL,`date` INT(10) NOT NULL,`time` INT(10) NOT NULL, CONSTRAINT id PRIMARY KEY (id))
+CREATE TABLE coldplace.citytemp (`id` bigint(20) NOT NULL AUTO_INCREMENT, `city` varchar(100) NOT NULL, `temp` INT(10)
+NOT NULL,`date` datetime NOT NULL, CONSTRAINT id PRIMARY KEY (id))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

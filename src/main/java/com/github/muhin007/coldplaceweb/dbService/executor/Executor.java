@@ -7,13 +7,14 @@ import java.sql.Statement;
 
 
 public class Executor {
-    private final Connection connection;
+
+    private static Connection connection;
 
     public Executor(Connection connection) {
-        this.connection = connection;
+        Executor.connection = connection;
     }
 
-    public void execUpdate(String update) throws SQLException {
+    public static void execUpdate(String update) throws SQLException {
         Statement stmt = connection.createStatement();
         stmt.execute(update);
         stmt.close();

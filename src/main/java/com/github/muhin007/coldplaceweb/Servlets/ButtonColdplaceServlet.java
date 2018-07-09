@@ -30,7 +30,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap();
 
-                    List<City> cities = ReadDB.readDB();
+                    List<City> cities = ReadDB.readCityFromDB();
                     City coldestCity = cities.get(0);
                     int min = coldestCity.calculateRandomTemperature();
 

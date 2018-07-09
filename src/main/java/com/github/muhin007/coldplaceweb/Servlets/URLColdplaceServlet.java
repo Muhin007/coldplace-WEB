@@ -2,6 +2,7 @@ package com.github.muhin007.coldplaceweb.Servlets;
 
 import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.ReadDB;
+import com.github.muhin007.coldplaceweb.Data.Temp;
 import com.github.muhin007.coldplaceweb.Data.WriteToDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
@@ -42,7 +43,7 @@ public class URLColdplaceServlet extends HttpServlet {
 
                     cityName = req.getParameter("cityName");
 
-                    List<City> cities = ReadDB.readDB();
+                    List<City> cities = ReadDB.readCityFromDB();
                     City foundedCity = null;
                     for (City city : cities) {
                         if (cityName.equalsIgnoreCase(city.getName())) {
@@ -77,6 +78,9 @@ public class URLColdplaceServlet extends HttpServlet {
 
 
                         WriteToDB.writeToDB();
+                       List<Temp> temps = ReadDB.readTempFromDB();
+                       System.out.println("в списке городов с таким названием: " + temps.indexOf(title));
+
 
                         pageVariables.put("cityName", cityName);
                         pageVariables.put("cityTemp", cityTemp);

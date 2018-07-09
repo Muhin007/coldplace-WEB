@@ -36,7 +36,7 @@ public class SearchCityColdplaceServlet extends HttpServlet {
 
                     String message = request.getParameter("name");
 
-                    List<City> cities = ReadDB.readDB();
+                    List<City> cities = ReadDB.readCityFromDB();
                     City foundedCity = null;
                     for (City city : cities) {
                         if (message.equalsIgnoreCase(city.getName())) {
