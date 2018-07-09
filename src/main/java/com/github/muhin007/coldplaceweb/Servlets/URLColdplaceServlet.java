@@ -79,7 +79,11 @@ public class URLColdplaceServlet extends HttpServlet {
 
                         WriteToDB.writeToDB();
                        List<Temp> temps = ReadDB.readTempFromDB();
-                       System.out.println("в списке городов с таким названием: " + temps.indexOf(title));
+                        for (Temp element : temps) {
+                            if(element.getCity().equals(cityName)){
+                                System.out.println(element);
+                            }
+                        }
 
 
                         pageVariables.put("cityName", cityName);

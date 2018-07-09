@@ -1,6 +1,9 @@
 package com.github.muhin007.coldplaceweb.Data;
 
+import java.util.List;
+
 public class Temp {
+
     private int id;
     private String city;
     private int temp;
@@ -29,18 +32,19 @@ public class Temp {
         return id + " " + city + " " + temp + " " + date;
     }
 
-    public int getID() { return id;
+    public int getID() {
+        return id;
     }
 
     public String getCity() {
         return city;
     }
 
-    private int getTemp() {
+    public int getTemp() {
         return temp;
     }
 
-    private String getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -59,9 +63,34 @@ public class Temp {
         result = 31 * result + temp;
         return result;
     }
-//    public int calculateAverageTemperature(){
-//        int temp = getTemp();
+
+//    public int calculateAverageTemperature() {
+//        List<Temp> temps = ReadDB.readTempFromDB();
+//        int summTemp = 0;
 //
+//        for (int i = 0; i < temps.size(); i++) {
+//            summTemp = temps.get(i);
+//        }
+//        int numberCities = temps.indexOf(getCity());
+//        double averageTemp = summTemp / numberCities;
+//        return (int) averageTemp;
+//    }
+//
+//    public Temp calculateMinMaxTemperature() {
+//        List<Temp> temps = ReadDB.readTempFromDB();
+//        Temp min = temps.get(0);
+//        Temp max = temps.get(0);
+//
+//        for (Temp i : temps) {
+//            if (i < min) {
+//                min = i;
+//            }
+//            if (i > max) {
+//                max = i;
+//            }
+//        }
+//        return min;
+//        return max;
 //    }
 
 }
