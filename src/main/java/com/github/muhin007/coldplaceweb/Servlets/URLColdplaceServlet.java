@@ -69,25 +69,21 @@ public class URLColdplaceServlet extends HttpServlet {
                         title = doc.select("div [id=ArchTemp]").select("div *").
                                 select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
 
-                       try {
-                           Scanner s = new Scanner(title);
-                           cityTemp = s.nextInt();
-                       } catch(java.util.NoSuchElementException e){
-                           System.out.println("нет данных о температуре");
-                       }
-
-
-                        WriteToDB.writeToDB();
-                       List<Temp> temps = ReadDB.readTempFromDB();
-                        for (Temp element : temps) {
-                            if(element.getCity().equals(cityName)){
-                                System.out.println(element);
-                            }
+                        try {
+                            Scanner s = new Scanner(title);
+                            cityTemp = s.nextInt();
+                        } catch (java.util.NoSuchElementException e) {
+                            System.out.println("нет данных о температуре");
                         }
 
 
+                        WriteToDB.writeToDB();
+
+                        System.out.println(Temp.calculateAverageTemperature());
+
                         pageVariables.put("cityName", cityName);
                         pageVariables.put("cityTemp", cityTemp);
+                        pageVariables.put("minTemp", Temp.calculateMinTemperature());
                         resp.getWriter().println(PageGenerator.instance().
                                 getPage("URLReadPageAnswer.html", pageVariables));
 
