@@ -1,9 +1,9 @@
 package com.github.muhin007.coldplaceweb.Servlets;
 
-import com.github.muhin007.coldplaceweb.Action;
 import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.DBConnection;
 import com.github.muhin007.coldplaceweb.PageGenerator;
+import com.github.muhin007.coldplaceweb.Process;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,18 +16,9 @@ import java.util.Map;
 
 public class ButtonColdplaceServlet extends HttpServlet {
 
-    private static void process(HttpServletRequest request,
-                                HttpServletResponse response, Action action) throws IOException {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=utf-8");
-
-        action.action(request, response);
-
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ButtonColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
+        Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap();
                     resp.getWriter().println(PageGenerator.instance().getPage("buttonPage.html", pageVariables));
                 }
@@ -36,7 +27,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ButtonColdplaceServlet.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
+        Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap();
 
                     List<City> cities = DBConnection.readDB();
