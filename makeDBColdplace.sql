@@ -13,6 +13,6 @@ GRANT ALL PRIVILEGES ON * . * TO 'root'@'localhost';
 FLUSH PRIVILEGES;
 
 CREATE TABLE coldplace.citytemp (`id` bigint(20) NOT NULL AUTO_INCREMENT, `city` varchar(100) NOT NULL, `temp` INT(10)
-NOT NULL,`date` datetime NOT NULL, CONSTRAINT id PRIMARY KEY (id))
+NOT NULL,`date` date NOT NULL, CONSTRAINT id PRIMARY KEY (id))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
