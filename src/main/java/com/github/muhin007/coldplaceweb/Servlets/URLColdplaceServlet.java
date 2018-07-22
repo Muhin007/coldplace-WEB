@@ -60,26 +60,28 @@ public class URLColdplaceServlet extends HttpServlet {
                         try {
                             doc = Jsoup.connect(url).get();
                         } catch (IOException e) {
-                            Map<String, Object> pageVariablesEx = createPageVariablesMap(request);
+                            Map<String, Object> pageVariablesEx = new HashMap<>();
                             pageVariablesEx.put("exceptionText", "Не получилось распознать страницу." +
                                     " Введите другой URL");
                             response.getWriter().println(PageGenerator.instance().
-                                    getPage("exceptions.html", pageVariables));
+                                    getPage("exceptions.html", pageVariablesEx));
+                            return;
                         }
-                        title = doc.select("div [id=ArchTemp]").select("div *").
+
+                        title = doc.select("div [class=ArchiveTemp]").select("div *").
                                 select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
 
                         try {
                             Scanner s = new Scanner(title);
                             cityTemp = s.nextInt();
-                        } catch (java.util.NoSuchElementException e) {
+                        } catch (NumberFormatException e) {
+                            //todo show error to user
                             System.out.println("нет данных о температуре");
                         }
 
 
                         WriteToDB.writeToDB();
 
-                        System.out.println(Temp.calculateAverageTemperature());
 
                         pageVariables.put("cityName", cityName);
                         pageVariables.put("cityTemp", cityTemp);
