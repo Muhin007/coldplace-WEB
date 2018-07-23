@@ -20,8 +20,5 @@ public class Process {
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
-    public interface Action {
-        void action(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException;
 
-    }
 }
