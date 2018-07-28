@@ -28,7 +28,7 @@ public class City {
 
     @Override
     public String toString() {
-        return id + " " + name + " " + min + " " + max;
+        return id + " " + name + " " + min + " " + max + " " + url;
     }
 
     public int getID() {return id;}
