@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class URLColdplaceServlet extends HttpServlet {
 
     public static String cityName;
     public static String title;
     public static int cityTemp;
+    int minTempCity;
+    int maxTempCity;
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
@@ -74,18 +74,34 @@ public class URLColdplaceServlet extends HttpServlet {
                         try {
                             Scanner s = new Scanner(title);
                             cityTemp = s.nextInt();
-                        } catch (NumberFormatException e) {
-                            //todo show error to user
-                            System.out.println("нет данных о температуре");
+                        } catch (NoSuchElementException e) {
+                            Map<String, Object> pageVariablesEx = new HashMap<>();
+                            pageVariablesEx.put("exceptionText", "Нет данных о температуре" +
+                                    " Введите другой URL");
+                            response.getWriter().println(PageGenerator.instance().
+                                    getPage("exceptions.html", pageVariablesEx));
+                            return;
+
                         }
 
 
                         WriteToDB.writeToDB();
 
+                        List<Temp> temps = ReadDB.readTempFromDB();
+                        List<Integer> tempsCity = new ArrayList<>();
+                        temps.forEach(temp -> {
+                            if (temp.getCity().equalsIgnoreCase(cityName)) {
+                                tempsCity.add(temp.getTemp());
+                                minTempCity = Collections.min(tempsCity);
+                                maxTempCity = Collections.max(tempsCity);
+                            }
+                        });
+
 
                         pageVariables.put("cityName", cityName);
                         pageVariables.put("cityTemp", cityTemp);
-                        pageVariables.put("minTemp", Temp.calculateMinTemperature());
+                        pageVariables.put("minTempCity", minTempCity);
+                        pageVariables.put("maxTempCity", maxTempCity);
                         resp.getWriter().println(PageGenerator.instance().
                                 getPage("URLReadPageAnswer.html", pageVariables));
 
