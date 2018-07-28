@@ -1,11 +1,6 @@
 package com.github.muhin007.coldplaceweb.Data;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.github.muhin007.coldplaceweb.Servlets.URLColdplaceServlet.cityName;
-
 public class Temp {
 
     private int id;
@@ -68,37 +63,4 @@ public class Temp {
         return result;
     }
 
-    public static double calculateAverageTemperature() {
-        List<Temp> temps = ReadDB.readTempFromDB();
-        for (Temp element : temps)
-            if (element.getCity().equals(cityName)) {
-                List<Integer> temp = new ArrayList<>();
-                temp.add(element.getTemp());
-                int summTemp = 0;
-
-                for (int i = 0; i < temp.size(); i++) {
-                    summTemp = temp.get(i);
-                }
-                int numberCities = temp.size();
-                double averageTemp = summTemp / numberCities;
-                return averageTemp;
-            }
-        return 0;
-    }
-
-        public static int calculateMinTemperature() {
-            List<Temp> temps = ReadDB.readTempFromDB();
-            for (Temp element : temps)
-                if (element.getCity().equals(cityName)) {
-                    List<Integer> temp = new ArrayList<>();
-                    temp.add(element.getTemp());
-                    int min = temp.get(0);
-                    for (int i : temp) {
-                        min = min < i ? min : i;
-                    }
-                    return min;
-                }
-
-            return 0;
-        }
-    }
+}
