@@ -11,9 +11,18 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import java.io.IOException;
+import java.util.logging.LogManager;
+
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        try {
+            LogManager.getLogManager().readConfiguration(
+                    Main.class.getResourceAsStream("logging.properties"));
+        } catch (IOException e) {
+            System.err.println("Не удалось настроить конфигурацию логгирования: " + e.toString());
+        }
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
@@ -34,6 +43,7 @@ public class Main {
         server.join();
     }
 }
+
 
 
 

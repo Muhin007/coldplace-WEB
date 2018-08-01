@@ -7,9 +7,13 @@ import com.mysql.jdbc.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class WriteToDB {
+
+    private static Logger log = Logger.getLogger(WriteToDB.class.getName());
 
     public static void writeToDB() {
         String query = "INSERT INTO coldplace.citytemp (city, temp, date) \n" +
@@ -30,7 +34,7 @@ public class WriteToDB {
                     + URLColdplaceServlet.cityTemp + " " + date);
 
         } catch (SQLException e) {
-
+            log.log(Level.SEVERE, "Exception: ", e);
            System.out.println("Запись в базу данных не сделана. Проверьте подключение или настройки БД.");
         }
     }

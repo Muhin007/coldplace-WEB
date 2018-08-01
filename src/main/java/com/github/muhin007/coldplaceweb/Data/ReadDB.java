@@ -6,8 +6,12 @@ import com.github.muhin007.coldplaceweb.dbService.DBService;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReadDB {
+
+    private static Logger log = Logger.getLogger(ReadDB.class.getName());
 
     public static List<City> readCityFromDB() {
 
@@ -29,6 +33,7 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
+            log.log(Level.SEVERE, "Exception: ", e);
            System.out.println("нет подключения к БД");
         }
         return cities;
@@ -51,6 +56,7 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
+            log.log(Level.SEVERE, "Exception: ", e);
             System.out.println("нет подключения к БД");
         }
         return temps;

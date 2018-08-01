@@ -6,8 +6,12 @@ import org.h2.jdbcx.JdbcDataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBService {
+
+    private static Logger log = Logger.getLogger(DBService.class.getName());
 
     private final Connection connection;
     public DBService() {
@@ -30,6 +34,7 @@ public class DBService {
             Connection connection = DriverManager.getConnection(url, name, pass);
             return connection;
         } catch (SQLException e) {
+            log.log(Level.SEVERE, "Exception: ", e);
             e.printStackTrace();
         }
         return null;
