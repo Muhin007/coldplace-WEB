@@ -6,12 +6,8 @@ import com.github.muhin007.coldplaceweb.dbService.DBService;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ReadDB {
-
-    private static Logger log = Logger.getLogger(ReadDB.class.getName());
 
     public static List<City> readCityFromDB() {
 
@@ -33,18 +29,18 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Exception: ", e);
-           System.out.println("нет подключения к БД");
+            System.out.println("нет подключения к БД");
         }
         return cities;
     }
-    public  static List<Temp> readTempFromDB(){
+
+    public static List<Temp> readTempFromDB() {
         String query = "select * from cityTemp";
-        List<Temp> temps = null;
+        List<Temp> temps = new ArrayList<>();
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-            temps = new ArrayList<>();
+
             while (rs.next()) {
                 Temp temp = new Temp();
                 temp.setID(rs.getInt("id"));
@@ -56,7 +52,6 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Exception: ", e);
             System.out.println("нет подключения к БД");
         }
         return temps;
