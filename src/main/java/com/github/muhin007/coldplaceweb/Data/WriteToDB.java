@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class WriteToDB {
 
     public static void writeToDB() {
-        String query = "INSERT INTO coldplace.citytemp (city, temp, date) \n" +
+        String query = "INSERT INTO coldplace.cityTemp (city, temp, date) \n" +
                 " VALUES (?, ?, ?);";
 
        String date = new Timestamp(new java.util.Date().getTime()).toString();

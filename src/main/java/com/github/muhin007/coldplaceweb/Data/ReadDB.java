@@ -29,17 +29,18 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
-           System.out.println("нет подключения к БД");
+            System.out.println("нет подключения к БД");
         }
         return cities;
     }
-    public  static List<Temp> readTempFromDB(){
+
+    public static List<Temp> readTempFromDB() {
         String query = "select * from cityTemp";
-        List<Temp> temps = null;
+        List<Temp> temps = new ArrayList<>();
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-            temps = new ArrayList<>();
+
             while (rs.next()) {
                 Temp temp = new Temp();
                 temp.setID(rs.getInt("id"));
