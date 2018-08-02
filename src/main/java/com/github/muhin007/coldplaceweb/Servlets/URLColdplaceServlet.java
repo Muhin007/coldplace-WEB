@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+
 
 
 public class URLColdplaceServlet extends HttpServlet {
@@ -25,7 +25,7 @@ public class URLColdplaceServlet extends HttpServlet {
     public static int cityTemp;
     int minTempCity;
     int maxTempCity;
-    private static Logger log = Logger.getLogger(URLColdplaceServlet.class.getName());
+    private static final Logger log = org.apache.log4j.Logger.getLogger(URLColdplaceServlet.class);
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
@@ -63,7 +63,7 @@ public class URLColdplaceServlet extends HttpServlet {
                         try {
                             doc = Jsoup.connect(url).get();
                         } catch (IOException e) {
-                            log.log(Level.SEVERE, "Exception: ", e);
+                            log.error(e.getMessage(), e);
                             Map<String, Object> pageVariablesEx = new HashMap<>();
                             pageVariablesEx.put("exceptionText", "Не получилось распознать страницу." +
                                     " Введите другой URL");
@@ -79,7 +79,7 @@ public class URLColdplaceServlet extends HttpServlet {
                             Scanner s = new Scanner(title);
                             cityTemp = s.nextInt();
                         } catch (NoSuchElementException e) {
-                            log.log(Level.SEVERE, "Exception: ", e);
+                            log.error(e.getMessage(), e);
                             Map<String, Object> pageVariablesEx = new HashMap<>();
                             pageVariablesEx.put("exceptionText", "Нет данных о температуре" +
                                     " Введите другой URL");

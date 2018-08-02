@@ -2,16 +2,18 @@ package com.github.muhin007.coldplaceweb.Data;
 
 
 import com.github.muhin007.coldplaceweb.dbService.DBService;
+import org.apache.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ReadDB {
 
-    private static Logger log = Logger.getLogger(ReadDB.class.getName());
+    private static final Logger log = Logger.getLogger(ReadDB.class);
 
     public static List<City> readCityFromDB() {
 
@@ -33,7 +35,7 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Exception: ", e);
+            log.error(e.getMessage(), e);
            System.out.println("нет подключения к БД");
         }
         return cities;
@@ -56,7 +58,7 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Exception: ", e);
+            log.error(e.getMessage(), e);
             System.out.println("нет подключения к БД");
         }
         return temps;

@@ -3,17 +3,16 @@ package com.github.muhin007.coldplaceweb.Data;
 import com.github.muhin007.coldplaceweb.Servlets.URLColdplaceServlet;
 import com.github.muhin007.coldplaceweb.dbService.DBService;
 import com.mysql.jdbc.PreparedStatement;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class WriteToDB {
 
-    private static Logger log = Logger.getLogger(WriteToDB.class.getName());
+    private static final Logger log = Logger.getLogger(WriteToDB.class);
 
     public static void writeToDB() {
         String query = "INSERT INTO coldplace.citytemp (city, temp, date) \n" +
@@ -34,7 +33,7 @@ public class WriteToDB {
                     + URLColdplaceServlet.cityTemp + " " + date);
 
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Exception: ", e);
+            log.error(e.getMessage(), e);
            System.out.println("Запись в базу данных не сделана. Проверьте подключение или настройки БД.");
         }
     }

@@ -5,12 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 public class Process {
 
-    private static Logger log = Logger.getLogger(Process.class.getName());
+    private static final Logger log = Logger.getLogger(Process.class);
 
     public static void process(HttpServletRequest request,
                                HttpServletResponse response, Action action) throws IOException {
@@ -20,7 +19,7 @@ public class Process {
         try {
             action.action(request, response);
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Exception: ", e);
+            log.error(e.getMessage(), e);
             e.printStackTrace();
         }
 

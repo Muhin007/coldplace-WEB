@@ -1,17 +1,15 @@
 package com.github.muhin007.coldplaceweb.dbService;
 
-
-import org.h2.jdbcx.JdbcDataSource;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class DBService {
 
-    private static Logger log = Logger.getLogger(DBService.class.getName());
+    private static final Logger log = Logger.getLogger(DBService.class);
 
     private final Connection connection;
     public DBService() {
@@ -26,15 +24,10 @@ public class DBService {
             String name = "root";
             String pass = "root";
 
-            JdbcDataSource ds = new JdbcDataSource();
-            ds.setURL(url);
-            ds.setUser(name);
-            ds.setPassword(pass);
-
             Connection connection = DriverManager.getConnection(url, name, pass);
             return connection;
         } catch (SQLException e) {
-            log.log(Level.SEVERE, "Exception: ", e);
+            log.error(e.getMessage(), e);
             e.printStackTrace();
         }
         return null;
