@@ -15,7 +15,7 @@ public class WriteToDB {
     private static final Logger log = Logger.getLogger(WriteToDB.class);
 
     public static void writeToDB() {
-        String query = "INSERT INTO coldplace.citytemp (city, temp, date) \n" +
+        String query = "INSERT INTO coldplace.cityTemp (city, temp, date) \n" +
                 " VALUES (?, ?, ?);";
 
        String date = new Timestamp(new java.util.Date().getTime()).toString();
