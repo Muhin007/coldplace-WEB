@@ -4,7 +4,6 @@ package com.github.muhin007.coldplaceweb;
 import com.github.muhin007.coldplaceweb.Servlets.ButtonColdplaceServlet;
 import com.github.muhin007.coldplaceweb.Servlets.SearchCityColdplaceServlet;
 import com.github.muhin007.coldplaceweb.Servlets.URLColdplaceServlet;
-import org.apache.log4j.BasicConfigurator;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -15,7 +14,8 @@ import org.eclipse.jetty.servlet.ServletHolder;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        BasicConfigurator.configure();
+        freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
+        org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
