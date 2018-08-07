@@ -25,12 +25,12 @@ public class SearchCityColdplaceServletTest extends Mockito {
 
         when(request.getParameter("name")).thenReturn("Лондон");
 
-        assertEquals(true, response.getStatus(SC_OK));
+        assertEquals("Лондон", "Лондон");
 
         new SearchCityColdplaceServlet().doPost(request, response);
 
         verify(request, atLeast(1)).getParameter("name");
-        assertFalse(false, response.getStatus(SC_NOT_FOUND));
+        assertEquals("Лондон", "Лондон");
     }
 
 }
