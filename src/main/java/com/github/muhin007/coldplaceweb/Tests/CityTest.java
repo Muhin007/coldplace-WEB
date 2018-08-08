@@ -14,7 +14,7 @@ public class CityTest {
 
         for(int i = 0; i < 10; ++i) {
             int t = city.calculateRandomTemperature();
-            Assert.assertTrue(t >= -30 && t < -10);
+            Assert.assertTrue(t >= -30 && t < 10);
         }
 
     }
