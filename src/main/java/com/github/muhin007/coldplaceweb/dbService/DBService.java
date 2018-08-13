@@ -12,6 +12,7 @@ public class DBService {
     private static final Logger log = Logger.getLogger(DBService.class);
 
     private final Connection connection;
+
     public DBService() {
         this.connection = getConnection();
     }
@@ -27,8 +28,9 @@ public class DBService {
             Connection connection = DriverManager.getConnection(url, name, pass);
             return connection;
         } catch (SQLException e) {
-            log.error(e.getMessage(), e);
-            e.printStackTrace();
+            log.error("Нет подключения к БД. Проверьте адрес, " +
+                    "имя пользователя и пароль, ", e);
+
         }
         return null;
     }

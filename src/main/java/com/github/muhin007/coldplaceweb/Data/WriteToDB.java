@@ -33,8 +33,7 @@ public class WriteToDB {
                     + URLColdplaceServlet.cityTemp + " " + date);
 
         } catch (SQLException e) {
-            log.error(e.getMessage(), e);
-           System.out.println("Запись в базу данных не сделана. Проверьте подключение или настройки БД.");
+            log.error("Запись в базу данных не сделана. Проверьте подключение или настройки БД.", e);
         }
     }
 }

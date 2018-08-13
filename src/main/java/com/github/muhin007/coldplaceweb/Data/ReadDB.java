@@ -18,11 +18,10 @@ public class ReadDB {
     public static List<City> readCityFromDB() {
 
         String query = "select * from city";
-        List<City> cities = null;
+        List<City> cities = new ArrayList<>();
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-            cities = new ArrayList<>();
             while (rs.next()) {
                 City city = new City();
                 city.setID(rs.getInt("id"));
@@ -35,8 +34,7 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
-            log.error(e.getMessage(), e);
-           System.out.println("нет подключения к БД");
+            log.error("нет подключения к БД", e);
         }
         return cities;
     }
@@ -58,8 +56,7 @@ public class ReadDB {
             }
 
         } catch (SQLException e) {
-            log.error(e.getMessage(), e);
-            System.out.println("нет подключения к БД");
+            log.error("нет подключения к БД", e);
         }
         return temps;
     }
