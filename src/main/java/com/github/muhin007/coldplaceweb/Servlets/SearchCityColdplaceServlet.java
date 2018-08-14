@@ -4,6 +4,7 @@ import com.github.muhin007.coldplaceweb.Data.City;
 import com.github.muhin007.coldplaceweb.Data.ReadDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 public class SearchCityColdplaceServlet extends HttpServlet {
 
+    private static final Logger log = org.apache.log4j.Logger.getLogger(SearchCityColdplaceServlet.class);
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
@@ -31,34 +33,43 @@ public class SearchCityColdplaceServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
-        Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+        try {
+            Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
+                        Map<String, Object> pageVariables = createPageVariablesMap(req);
 
-                    String message = request.getParameter("name");
+                        String message = request.getParameter("name");
 
-                    List<City> cities = ReadDB.readCityFromDB();
-                    City foundedCity = null;
-                    for (City city : cities) {
-                        if (message.equalsIgnoreCase(city.getName())) {
-                            foundedCity = city;
+                        List<City> cities = ReadDB.readCityFromDB();
+                        City foundedCity = null;
+                        for (City city : cities) {
+                            if (message.equalsIgnoreCase(city.getName())) {
+                                foundedCity = city;
 
-                            break;
+                                break;
+                            }
+                        }
+
+                        if (foundedCity != null) {
+
+                            pageVariables.put("cityName", message);
+                            pageVariables.put("minTemp", foundedCity.calculateRandomTemperature());
+                            resp.getWriter().println(PageGenerator.instance().getPage("answerSearchCity.html",
+                                    pageVariables));
+
+                        } else {
+                            pageVariables.put("cityNotFound", "Города нет в списке");
+                            resp.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
                         }
                     }
-
-                    if (foundedCity != null) {
-
-                        pageVariables.put("cityName", message);
-                        pageVariables.put("minTemp", foundedCity.calculateRandomTemperature());
-                        resp.getWriter().println(PageGenerator.instance().getPage("answerSearchCity.html",
-                                pageVariables));
-
-                    } else {
-                        pageVariables.put("cityNotFound", "Города нет в списке");
-                        resp.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
-                    }
-                }
-        );
+            );
+        }
+        catch (NullPointerException e){
+            log.error("Нет подключения к БД. Проверьте адрес, " +
+                    "имя пользователя и пароль ", e);
+            Map<String, Object> pageVariablesEx = new HashMap<>();
+            response.getWriter().println(PageGenerator.instance().
+                    getPage("exception500.html", pageVariablesEx));
+        }
 
     }
 

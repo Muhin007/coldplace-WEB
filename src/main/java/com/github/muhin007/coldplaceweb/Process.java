@@ -13,17 +13,23 @@ public class Process {
 
     public static void process(HttpServletRequest request,
                                HttpServletResponse response, Action action) throws IOException {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=utf-8");
-
         try {
-            action.action(request, response);
-        } catch (SQLException e) {
-            log.error(e.getMessage(), e);
-            e.printStackTrace();
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=utf-8");
+
+            try {
+                action.action(request, response);
+            } catch (SQLException e) {
+                log.error("Проверьте подключение к БД", e);
+            }
+
+            response.setStatus(HttpServletResponse.SC_OK);
         }
 
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
+        catch (NullPointerException e) {
+            log.error("Нет подключения к БД. Проверьте адрес," +
+                    " имя пользователя и пароль", e);
+        }
 
+    }
 }
