@@ -2,7 +2,6 @@ package com.github.muhin007.coldplaceweb.data;
 
 
 import com.github.muhin007.coldplaceweb.dbservice.DBService;
-import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,10 +12,7 @@ import java.util.List;
 
 public class ReadDB {
 
-    private static final Logger log = Logger.getLogger(ReadDB.class);
-
-    public static List<City> readCityFromDB() {
-
+    public static List<City> readCityFromDB() throws SQLException {
         String query = "select * from city";
         List<City> cities = new ArrayList<>();
         try (Connection con = DBService.getConnection();
@@ -30,15 +26,12 @@ public class ReadDB {
                 city.setMaxTemperature(rs.getInt("max"));
                 city.setURL(rs.getString("url"));
                 cities.add(city);
-
             }
-
-        } catch (SQLException e) {
-            log.error("нет подключения к БД", e);
         }
         return cities;
     }
-    public  static List<Temp> readTempFromDB(){
+
+    public static List<Temp> readTempFromDB() throws SQLException {
         String query = "select * from cityTemp";
         List<Temp> temps = null;
         try (Connection con = DBService.getConnection();
@@ -52,15 +45,10 @@ public class ReadDB {
                 temp.setTemp(rs.getInt("temp"));
                 temp.setDate(rs.getString("date"));
                 temps.add(temp);
-
             }
-
-        } catch (SQLException e) {
-            log.error("нет подключения к БД", e);
         }
         return temps;
     }
-
 }
 
 
