@@ -6,7 +6,6 @@ import com.github.muhin007.coldplaceweb.Data.Temp;
 import com.github.muhin007.coldplaceweb.Data.WriteToDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
-import com.github.muhin007.coldplaceweb.dbService.DBService;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,7 +27,7 @@ public class URLColdplaceServlet extends HttpServlet {
     private static final Logger log = org.apache.log4j.Logger.getLogger(URLColdplaceServlet.class);
 
     public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws IOException {
+                      HttpServletResponse response) {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
@@ -40,86 +39,81 @@ public class URLColdplaceServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws IOException {
+                       HttpServletResponse response) {
+
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
+
                     cityName = req.getParameter("cityName");
 
-                    if (DBService.getConnection() == null) {
-                        Map<String, Object> pageVariablesEx = new HashMap<>();
-                        response.getWriter().println(PageGenerator.instance().
-                                getPage("exception500.html", pageVariablesEx));
-                        return;
 
-                    } else {
+                    List<City> cities = ReadDB.readCityFromDB();
 
-                        List<City> cities = ReadDB.readCityFromDB();
+                    City foundedCity = null;
+                    for (City city : cities) {
+                        if (cityName.equalsIgnoreCase(city.getName())) {
+                            foundedCity = city;
 
-                        City foundedCity = null;
-                        for (City city : cities) {
-                            if (cityName.equalsIgnoreCase(city.getName())) {
-                                foundedCity = city;
-
-                                break;
-                            }
-                        }
-
-                        if (foundedCity != null) {
-
-                            String url = foundedCity.getUrl();
-                            Document doc = null;
-                            try {
-                                doc = Jsoup.connect(url).get();
-                            } catch (IOException e) {
-                                log.error("Не получилось распознать страницу", e);
-                                Map<String, Object> pageVariablesEx = new HashMap<>();
-                                pageVariablesEx.put("exceptionText", "Не получилось распознать страницу." +
-                                        " Введите другой URL");
-                                response.getWriter().println(PageGenerator.instance().
-                                        getPage("exceptions.html", pageVariablesEx));
-                                return;
-                            }
-
-                            title = doc.select("div [class=ArchiveTemp]").select("div *").
-                                    select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
-
-                            try {
-                                Scanner s = new Scanner(title);
-                                cityTemp = s.nextInt();
-                            } catch (NoSuchElementException e) {
-                                log.error("При парсинге страницы данные о температуре не найдены", e);
-                                Map<String, Object> pageVariablesEx = new HashMap<>();
-                                pageVariablesEx.put("exceptionText", "Нет данных о температуре" +
-                                        " Введите другой URL");
-                                response.getWriter().println(PageGenerator.instance().
-                                        getPage("exceptions.html", pageVariablesEx));
-                                return;
-
-                            }
-
-                            List<Temp> temps = ReadDB.readTempFromDB();
-                            List<Integer> tempsCity = new ArrayList<>();
-                            temps.forEach(temp -> {
-                                if (temp.getCity().equalsIgnoreCase(cityName)) {
-                                    tempsCity.add(temp.getTemp());
-                                    minTempCity = Collections.min(tempsCity);
-                                    maxTempCity = Collections.max(tempsCity);
-                                }
-                            });
-
-                            WriteToDB.writeToDB();
-
-                            pageVariables.put("cityName", cityName);
-                            pageVariables.put("cityTemp", cityTemp);
-                            pageVariables.put("minTempCity", minTempCity);
-                            pageVariables.put("maxTempCity", maxTempCity);
-                            resp.getWriter().println(PageGenerator.instance().
-                                    getPage("URLReadPageAnswer.html", pageVariables));
-
-
+                            break;
                         }
                     }
+
+                    if (foundedCity != null) {
+
+                        String url = foundedCity.getUrl();
+                        Document doc = null;
+                        try {
+                            doc = Jsoup.connect(url).get();
+                        } catch (IOException e) {
+                            log.error("Не получилось распознать страницу", e);
+                            Map<String, Object> pageVariablesEx = new HashMap<>();
+                            pageVariablesEx.put("exceptionText", "Не получилось распознать страницу." +
+                                    " Введите другой URL");
+                            response.getWriter().println(PageGenerator.instance().
+                                    getPage("exceptions.html", pageVariablesEx));
+                            return;
+                        }
+
+                        title = doc.select("div [class=ArchiveTemp]").select("div *").
+                                select("span[class=t_0]").removeAttr("style").removeAttr("class").text();
+
+                        try {
+                            Scanner s = new Scanner(title);
+                            cityTemp = s.nextInt();
+                        } catch (NoSuchElementException e) {
+                            log.error("При парсинге страницы данные о температуре не найдены", e);
+                            Map<String, Object> pageVariablesEx = new HashMap<>();
+                            pageVariablesEx.put("exceptionText", "Нет данных о температуре" +
+                                    " Введите другой URL");
+                            response.getWriter().println(PageGenerator.instance().
+                                    getPage("exceptions.html", pageVariablesEx));
+                            return;
+
+                        }
+
+                        List<Temp> temps = ReadDB.readTempFromDB();
+                        List<Integer> tempsCity = new ArrayList<>();
+                        temps.forEach(temp -> {
+                            if (temp.getCity().equalsIgnoreCase(cityName)) {
+                                tempsCity.add(temp.getTemp());
+                                minTempCity = Collections.min(tempsCity);
+                                maxTempCity = Collections.max(tempsCity);
+                            }
+                        });
+
+                        WriteToDB.writeToDB();
+
+                        pageVariables.put("cityName", cityName);
+                        pageVariables.put("cityTemp", cityTemp);
+                        pageVariables.put("minTempCity", minTempCity);
+                        pageVariables.put("maxTempCity", maxTempCity);
+                        resp.getWriter().println(PageGenerator.instance().
+                                getPage("URLReadPageAnswer.html", pageVariables));
+
+
+                    }
+
                 }
 
         );
