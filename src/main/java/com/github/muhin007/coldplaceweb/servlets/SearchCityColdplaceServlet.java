@@ -1,22 +1,18 @@
 package com.github.muhin007.coldplaceweb.servlets;
 
-import com.github.muhin007.coldplaceweb.data.City;
-import com.github.muhin007.coldplaceweb.data.ReadDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
-import org.apache.log4j.Logger;
+import com.github.muhin007.coldplaceweb.data.City;
+import com.github.muhin007.coldplaceweb.data.ReadDB;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class SearchCityColdplaceServlet extends HttpServlet {
-
-    private static final Logger log = org.apache.log4j.Logger.getLogger(SearchCityColdplaceServlet.class);
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
@@ -63,7 +59,6 @@ public class SearchCityColdplaceServlet extends HttpServlet {
                 }
         );
     }
-
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
