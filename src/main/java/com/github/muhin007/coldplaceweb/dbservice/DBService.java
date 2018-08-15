@@ -1,4 +1,4 @@
-package com.github.muhin007.coldplaceweb.dbService;
+package com.github.muhin007.coldplaceweb.dbservice;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

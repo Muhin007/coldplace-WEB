@@ -1,4 +1,4 @@
-package com.github.muhin007.coldplaceweb.Data;
+package com.github.muhin007.coldplaceweb.data;
 
 
 public class Temp {

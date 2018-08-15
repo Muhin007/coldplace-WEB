@@ -1,9 +1,9 @@
-package com.github.muhin007.coldplaceweb.Servlets;
+package com.github.muhin007.coldplaceweb.servlets;
 
-import com.github.muhin007.coldplaceweb.Data.City;
-import com.github.muhin007.coldplaceweb.Data.ReadDB;
-import com.github.muhin007.coldplaceweb.Data.Temp;
-import com.github.muhin007.coldplaceweb.Data.WriteToDB;
+import com.github.muhin007.coldplaceweb.data.City;
+import com.github.muhin007.coldplaceweb.data.ReadDB;
+import com.github.muhin007.coldplaceweb.data.Temp;
+import com.github.muhin007.coldplaceweb.data.WriteToDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
 import org.apache.log4j.Logger;

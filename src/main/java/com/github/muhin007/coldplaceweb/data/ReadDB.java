@@ -1,7 +1,7 @@
-package com.github.muhin007.coldplaceweb.Data;
+package com.github.muhin007.coldplaceweb.data;
 
 
-import com.github.muhin007.coldplaceweb.dbService.DBService;
+import com.github.muhin007.coldplaceweb.dbservice.DBService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
