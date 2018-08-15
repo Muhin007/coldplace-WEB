@@ -1,22 +1,23 @@
-package com.github.muhin007.coldplaceweb.Data;
+package com.github.muhin007.coldplaceweb.data;
 
 
-import com.github.muhin007.coldplaceweb.dbService.DBService;
+import com.github.muhin007.coldplaceweb.dbservice.DBService;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReadDB {
 
-    public static List<City> readCityFromDB() {
-
+    public static List<City> readCityFromDB() throws SQLException {
         String query = "select * from city";
-        List<City> cities = null;
+        List<City> cities = new ArrayList<>();
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-            cities = new ArrayList<>();
             while (rs.next()) {
                 City city = new City();
                 city.setID(rs.getInt("id"));
@@ -25,22 +26,18 @@ public class ReadDB {
                 city.setMaxTemperature(rs.getInt("max"));
                 city.setURL(rs.getString("url"));
                 cities.add(city);
-
             }
-
-        } catch (SQLException e) {
-            System.out.println("нет подключения к БД");
         }
         return cities;
     }
 
-    public static List<Temp> readTempFromDB() {
+    public static List<Temp> readTempFromDB() throws SQLException {
         String query = "select * from cityTemp";
-        List<Temp> temps = new ArrayList<>();
+        List<Temp> temps = null;
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-
+            temps = new ArrayList<>();
             while (rs.next()) {
                 Temp temp = new Temp();
                 temp.setID(rs.getInt("id"));
@@ -48,15 +45,10 @@ public class ReadDB {
                 temp.setTemp(rs.getInt("temp"));
                 temp.setDate(rs.getString("date"));
                 temps.add(temp);
-
             }
-
-        } catch (SQLException e) {
-            System.out.println("нет подключения к БД");
         }
         return temps;
     }
-
 }
 
 

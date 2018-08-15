@@ -1,11 +1,12 @@
-package com.github.muhin007.coldplaceweb.Servlets;
+package com.github.muhin007.coldplaceweb.servlets;
 
-import com.github.muhin007.coldplaceweb.Data.City;
-import com.github.muhin007.coldplaceweb.Data.ReadDB;
-import com.github.muhin007.coldplaceweb.Data.Temp;
-import com.github.muhin007.coldplaceweb.Data.WriteToDB;
+import com.github.muhin007.coldplaceweb.data.City;
+import com.github.muhin007.coldplaceweb.data.ReadDB;
+import com.github.muhin007.coldplaceweb.data.Temp;
+import com.github.muhin007.coldplaceweb.data.WriteToDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -23,9 +24,10 @@ public class URLColdplaceServlet extends HttpServlet {
     public static int cityTemp;
     int minTempCity;
     int maxTempCity;
+    private static final Logger log = org.apache.log4j.Logger.getLogger(URLColdplaceServlet.class);
 
     public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws IOException {
+                      HttpServletResponse response) {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
@@ -37,13 +39,17 @@ public class URLColdplaceServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws IOException {
+                       HttpServletResponse response) {
+
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
+
                     cityName = req.getParameter("cityName");
 
+
                     List<City> cities = ReadDB.readCityFromDB();
+
                     City foundedCity = null;
                     for (City city : cities) {
                         if (cityName.equalsIgnoreCase(city.getName())) {
@@ -60,6 +66,7 @@ public class URLColdplaceServlet extends HttpServlet {
                         try {
                             doc = Jsoup.connect(url).get();
                         } catch (IOException e) {
+                            log.error("Не получилось распознать страницу", e);
                             Map<String, Object> pageVariablesEx = new HashMap<>();
                             pageVariablesEx.put("exceptionText", "Не получилось распознать страницу." +
                                     " Введите другой URL");
@@ -75,6 +82,7 @@ public class URLColdplaceServlet extends HttpServlet {
                             Scanner s = new Scanner(title);
                             cityTemp = s.nextInt();
                         } catch (NoSuchElementException e) {
+                            log.error("При парсинге страницы данные о температуре не найдены", e);
                             Map<String, Object> pageVariablesEx = new HashMap<>();
                             pageVariablesEx.put("exceptionText", "Нет данных о температуре" +
                                     " Введите другой URL");
@@ -83,9 +91,6 @@ public class URLColdplaceServlet extends HttpServlet {
                             return;
 
                         }
-
-
-                        WriteToDB.writeToDB();
 
                         List<Temp> temps = ReadDB.readTempFromDB();
                         List<Integer> tempsCity = new ArrayList<>();
@@ -97,6 +102,7 @@ public class URLColdplaceServlet extends HttpServlet {
                             }
                         });
 
+                        WriteToDB.writeToDB();
 
                         pageVariables.put("cityName", cityName);
                         pageVariables.put("cityTemp", cityTemp);
@@ -107,7 +113,9 @@ public class URLColdplaceServlet extends HttpServlet {
 
 
                     }
+
                 }
+
         );
     }
 
@@ -119,4 +127,5 @@ public class URLColdplaceServlet extends HttpServlet {
     }
 
 }
+
 
