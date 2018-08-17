@@ -1,9 +1,9 @@
 package com.github.muhin007.coldplaceweb;
 
 
-import com.github.muhin007.coldplaceweb.Servlets.ButtonColdplaceServlet;
-import com.github.muhin007.coldplaceweb.Servlets.SearchCityColdplaceServlet;
-import com.github.muhin007.coldplaceweb.Servlets.URLColdplaceServlet;
+import com.github.muhin007.coldplaceweb.servlets.ButtonColdplaceServlet;
+import com.github.muhin007.coldplaceweb.servlets.SearchCityColdplaceServlet;
+import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
