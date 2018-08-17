@@ -1,6 +1,6 @@
-package com.github.muhin007.coldplaceweb.Tests;
+package com.github.muhin007.coldplaceweb;
 
-import com.github.muhin007.coldplaceweb.Data.City;
+import com.github.muhin007.coldplaceweb.data.City;
 import org.junit.Assert;
 import org.junit.Test;
 
