@@ -1,6 +1,7 @@
 package com.github.muhin007.coldplaceweb;
 
 
+import com.github.muhin007.coldplaceweb.servlets.AuthorizationServlet;
 import com.github.muhin007.coldplaceweb.servlets.ButtonColdplaceServlet;
 import com.github.muhin007.coldplaceweb.servlets.SearchCityColdplaceServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
@@ -18,6 +19,7 @@ public class Main {
         org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.addServlet(new ServletHolder(new AuthorizationServlet()), "/auth");
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
         context.addServlet(new ServletHolder(new SearchCityColdplaceServlet()), "/*");
         context.addServlet(new ServletHolder(new URLColdplaceServlet()), "/URLRead");
