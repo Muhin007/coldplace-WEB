@@ -1,6 +1,7 @@
 package com.github.muhin007.coldplaceweb.data;
 
 import com.github.muhin007.coldplaceweb.dbservice.DBService;
+import com.github.muhin007.coldplaceweb.servlets.AuthorizationServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -21,6 +22,19 @@ public class WriteToDB {
             preparedStmt.setString(1, URLColdplaceServlet.cityName);
             preparedStmt.setInt(2, URLColdplaceServlet.cityTemp);
             preparedStmt.setObject(3, date);
+            preparedStmt.executeUpdate();
+        }
+    }
+
+    public static void writeUserToDB() throws Exception {
+        String query = "INSERT INTO coldplace.users (login, pass, email) \n" +
+                "VALUES (?, ?, ?);";
+        try (Connection con = DBService.getConnection();
+             PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(query)) {
+
+            preparedStmt.setString(1, AuthorizationServlet.login);
+            preparedStmt.setString(2, AuthorizationServlet.pass);
+            preparedStmt.setString(3, AuthorizationServlet.email);
             preparedStmt.executeUpdate();
         }
     }
