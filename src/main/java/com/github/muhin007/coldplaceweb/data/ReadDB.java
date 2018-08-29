@@ -49,6 +49,24 @@ public class ReadDB {
         }
         return temps;
     }
+
+    public  static List<User> readUserFronDB() throws  SQLException {
+        String query = "select * from users";
+        List<User> users = new ArrayList<>();
+        try (Connection con = DBService.getConnection();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                User user = new User();
+                user.setID(rs.getInt("id"));
+                user.setLogin(rs.getString("login"));
+                user.setPass(rs.getString("pass"));
+                user.setEmail(rs.getString("email"));
+                users.add(user);
+            }
+        }
+        return users;
+    }
 }
 
 
