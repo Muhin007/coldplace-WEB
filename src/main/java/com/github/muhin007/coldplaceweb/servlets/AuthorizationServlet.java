@@ -16,6 +16,7 @@ public class AuthorizationServlet extends HttpServlet {
     public static String login;
     public static String pass;
     public static String email;
+    public static String role;
 
     private static final Logger log = org.apache.log4j.Logger.getLogger(URLColdplaceServlet.class);
 
@@ -27,6 +28,7 @@ public class AuthorizationServlet extends HttpServlet {
                     pageVariables.put("login", "");
                     pageVariables.put("pass", "");
                     pageVariables.put("email", "");
+                    pageVariables.put("role", "");
                     resp.getWriter().println(PageGenerator.instance().getPage("authorization.html", pageVariables));
                 }
         );
@@ -41,6 +43,7 @@ public class AuthorizationServlet extends HttpServlet {
                     login = req.getParameter("login");
                     pass = req.getParameter("pass");
                     email = req.getParameter("email");
+                    role = req.getParameter("role");
 
                     try {
                         WriteToDB.writeUserToDB();
@@ -49,6 +52,7 @@ public class AuthorizationServlet extends HttpServlet {
                     }
 
                     pageVariables.put("login", login);
+                    pageVariables.put("role", role);
                     resp.getWriter().println(PageGenerator.instance().
                             getPage("authorizationAnswer.html", pageVariables));
 

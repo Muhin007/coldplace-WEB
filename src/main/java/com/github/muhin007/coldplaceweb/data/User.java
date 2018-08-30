@@ -4,6 +4,7 @@ public class User {
     private String login;
     private String pass;
     private  String email;
+    private String role;
 
 
 
@@ -17,9 +18,11 @@ public class User {
 
     void setEmail (String email) {this.email = email;}
 
+    void setRole (String role) {this.role = role;}
+
     @Override
     public String toString() {
-        return login + " " + pass + " " + email;
+        return login + " " + pass + " " + email + " " + role;
     }
 
 
@@ -30,6 +33,8 @@ public class User {
     public String getPass() {return pass; }
 
     public String getEmail() {return email; }
+
+    public String getRole() {return role; }
 
 
     @Override
