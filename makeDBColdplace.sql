@@ -16,3 +16,6 @@ CREATE TABLE coldplace.cityTemp (`id` bigint(20) NOT NULL AUTO_INCREMENT, `city`
 NOT NULL,`date` date NOT NULL, CONSTRAINT id PRIMARY KEY (id))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE coldplace.users (`login` varchar(100) NOT NULL, `pass` varchar(100) NOT NULL,`email` varchar(100) NOT NULL)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
