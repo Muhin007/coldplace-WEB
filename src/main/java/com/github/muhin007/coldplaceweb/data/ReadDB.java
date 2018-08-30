@@ -61,6 +61,7 @@ public class ReadDB {
                 user.setLogin(rs.getString("login"));
                 user.setPass(rs.getString("pass"));
                 user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
                 users.add(user);
             }
         }

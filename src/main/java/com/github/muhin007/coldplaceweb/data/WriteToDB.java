@@ -35,7 +35,7 @@ public class WriteToDB {
             preparedStmt.setString(1, AuthorizationServlet.login);
             preparedStmt.setString(2, AuthorizationServlet.pass);
             preparedStmt.setString(3, AuthorizationServlet.email);
-            preparedStmt.setString(3, AuthorizationServlet.role);
+            preparedStmt.setString(4, AuthorizationServlet.role);
             preparedStmt.executeUpdate();
         }
     }
