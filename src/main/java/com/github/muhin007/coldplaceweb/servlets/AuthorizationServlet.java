@@ -38,6 +38,10 @@ public class AuthorizationServlet extends HttpServlet {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
+                    login = req.getParameter("login");
+                    pass = req.getParameter("pass");
+                    email = req.getParameter("email");
+
                     try {
                         WriteToDB.writeUserToDB();
                     } catch (Exception e) {

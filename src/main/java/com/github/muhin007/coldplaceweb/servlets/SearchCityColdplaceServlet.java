@@ -20,7 +20,7 @@ public class SearchCityColdplaceServlet extends HttpServlet {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
                     pageVariables.put("name", "");
-                    resp.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+                    resp.getWriter().println(PageGenerator.instance().getPage("searchCity.html", pageVariables));
                 }
         );
 
@@ -54,7 +54,7 @@ public class SearchCityColdplaceServlet extends HttpServlet {
 
                     } else {
                         pageVariables.put("cityNotFound", "Города нет в списке");
-                        resp.getWriter().println(PageGenerator.instance().getPage("index.html", pageVariables));
+                        resp.getWriter().println(PageGenerator.instance().getPage("searchCity.html", pageVariables));
                     }
                 }
         );
