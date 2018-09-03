@@ -26,17 +26,39 @@ public class WriteToDB {
         }
     }
 
-    public static void writeUserToDB() throws Exception {
+    public static void writeUserToDB() {
+
         String query = "INSERT INTO coldplace.users (login, pass, email, role) \n" +
                 "VALUES (?, ?, ?, ?);";
-        try (Connection con = DBService.getConnection();
-             PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(query)) {
-
+        Connection con = null;
+        try {
+            con = DBService.getConnection();
+            con.setAutoCommit(false);
+            PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(query);
             preparedStmt.setString(1, AuthorizationServlet.login);
             preparedStmt.setString(2, AuthorizationServlet.pass);
             preparedStmt.setString(3, AuthorizationServlet.email);
             preparedStmt.setString(4, AuthorizationServlet.role);
             preparedStmt.executeUpdate();
+            con.commit();
+
+        } catch (Exception e) {
+            if (con != null) {
+                try {
+                    con.rollback();
+                } catch (Exception ex) {
+                }
+            }
+            e.printStackTrace();
+        } finally
+
+        {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                }
+            }
         }
     }
 }
