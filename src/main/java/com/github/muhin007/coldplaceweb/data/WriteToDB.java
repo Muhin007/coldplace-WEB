@@ -1,7 +1,7 @@
 package com.github.muhin007.coldplaceweb.data;
 
 import com.github.muhin007.coldplaceweb.dbservice.DBService;
-import com.github.muhin007.coldplaceweb.servlets.AuthorizationServlet;
+import com.github.muhin007.coldplaceweb.servlets.RegistrationServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -35,10 +35,10 @@ public class WriteToDB {
             con = DBService.getConnection();
             con.setAutoCommit(false);
             PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(query);
-            preparedStmt.setString(1, AuthorizationServlet.login);
-            preparedStmt.setString(2, AuthorizationServlet.pass);
-            preparedStmt.setString(3, AuthorizationServlet.email);
-            preparedStmt.setString(4, AuthorizationServlet.role);
+            preparedStmt.setString(1, RegistrationServlet.login);
+            preparedStmt.setString(2, RegistrationServlet.pass);
+            preparedStmt.setString(3, RegistrationServlet.email);
+            preparedStmt.setString(4, RegistrationServlet.role);
             preparedStmt.executeUpdate();
             con.commit();
 
