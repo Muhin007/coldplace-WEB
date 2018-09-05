@@ -1,23 +1,21 @@
-package com.github.muhin007.coldplaceweb.Servlets;
+package com.github.muhin007.coldplaceweb.servlets;
 
-import com.github.muhin007.coldplaceweb.Data.City;
-import com.github.muhin007.coldplaceweb.Data.ReadDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
+import com.github.muhin007.coldplaceweb.data.City;
+import com.github.muhin007.coldplaceweb.data.ReadDB;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class SearchCityColdplaceServlet extends HttpServlet {
 
-
     public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws IOException {
+                      HttpServletResponse response) {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
@@ -30,7 +28,8 @@ public class SearchCityColdplaceServlet extends HttpServlet {
 
 
     public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws IOException {
+                       HttpServletResponse response) {
+
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
@@ -59,7 +58,6 @@ public class SearchCityColdplaceServlet extends HttpServlet {
                     }
                 }
         );
-
     }
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {

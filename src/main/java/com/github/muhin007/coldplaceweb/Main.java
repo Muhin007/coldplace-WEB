@@ -14,6 +14,8 @@ import org.eclipse.jetty.servlet.ServletHolder;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
+        org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
@@ -30,10 +32,11 @@ public class Main {
         server.setHandler(handlers);
 
         server.start();
-        System.out.println("Сервер запущен");
+        System.out.println("Сервер запущен http://localhost:8080");
         server.join();
     }
 }
+
 
 
 

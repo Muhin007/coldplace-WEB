@@ -1,4 +1,4 @@
-package com.github.muhin007.coldplaceweb.dbService.executor;
+package com.github.muhin007.coldplaceweb.dbservice.executor;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

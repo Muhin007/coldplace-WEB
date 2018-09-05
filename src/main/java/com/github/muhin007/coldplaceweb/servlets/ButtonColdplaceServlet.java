@@ -1,7 +1,7 @@
-package com.github.muhin007.coldplaceweb.Servlets;
+package com.github.muhin007.coldplaceweb.servlets;
 
-import com.github.muhin007.coldplaceweb.Data.City;
-import com.github.muhin007.coldplaceweb.Data.ReadDB;
+import com.github.muhin007.coldplaceweb.data.City;
+import com.github.muhin007.coldplaceweb.data.ReadDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
 
@@ -17,7 +17,7 @@ import java.util.Map;
 public class ButtonColdplaceServlet extends HttpServlet {
 
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap();
                     resp.getWriter().println(PageGenerator.instance().getPage("buttonPage.html", pageVariables));
@@ -26,7 +26,7 @@ public class ButtonColdplaceServlet extends HttpServlet {
 
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap();
 
