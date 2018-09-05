@@ -9,6 +9,9 @@ public class City {
     private int max;
     private  String url;
 
+    public City() {
+    }
+
 
     void setID(int id) { this.id = id; }
 
