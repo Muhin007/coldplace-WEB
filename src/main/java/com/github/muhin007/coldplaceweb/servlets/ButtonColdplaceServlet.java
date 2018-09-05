@@ -1,14 +1,13 @@
 package com.github.muhin007.coldplaceweb.servlets;
 
-import com.github.muhin007.coldplaceweb.data.City;
-import com.github.muhin007.coldplaceweb.data.ReadDB;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
+import com.github.muhin007.coldplaceweb.data.City;
+import com.github.muhin007.coldplaceweb.data.ReadDB;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
