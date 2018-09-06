@@ -51,7 +51,7 @@ public class WriteToDB {
         } catch (Exception e) {
             if (con != null) {
                 try {
-                    System.err.print("Transaction is being rolled back");
+                    System.err.print("Transaction is being rolled back ");
                     con.rollback();
                 } catch (Exception ex) {
                 }
