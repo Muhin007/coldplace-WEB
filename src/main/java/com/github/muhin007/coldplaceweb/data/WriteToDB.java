@@ -1,16 +1,23 @@
 package com.github.muhin007.coldplaceweb.data;
 
+import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.dbservice.DBService;
 import com.github.muhin007.coldplaceweb.servlets.RegistrationServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import com.mysql.jdbc.PreparedStatement;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
+
+import static java.sql.DriverManager.println;
 
 
 public class WriteToDB {
+    private static final Logger log = Logger.getLogger(WriteToDB.class);
+
     public static void writeToDB() throws Exception {
         String query = "INSERT INTO coldplace.cityTemp (city, temp, date) \n" +
                 " VALUES (?, ?, ?);";
@@ -39,24 +46,28 @@ public class WriteToDB {
             con.setAutoCommit(false);
             preparedStmt = (PreparedStatement) con.prepareStatement(query);
             preparedStmt.setString(1, RegistrationServlet.login);
-            preparedStmt.executeUpdate();
+            preparedStmt.execute();
             preparedStmt.setString(2, RegistrationServlet.pass);
-            preparedStmt.executeUpdate();
+            preparedStmt.execute();
             preparedStmt.setString(3, RegistrationServlet.email);
-            preparedStmt.executeUpdate();
+            preparedStmt.execute();
             preparedStmt.setString(4, RegistrationServlet.role);
             preparedStmt.executeUpdate();
             con.commit();
 
         } catch (Exception e) {
             if (con != null) {
+
                 try {
-                    System.err.print("Transaction is being rolled back ");
                     con.rollback();
                 } catch (Exception ex) {
+                    log.error("Произошла ошибка. Подробности смотри в log-файле", ex);
                 }
+                println(PageGenerator.instance().getPage("noRegistrationData.html", new HashMap<>()));
+                log.error("Ошибка записи в БД. Не все данные введены в форму.", e);
+                return;
             }
-            e.printStackTrace();
+
         } finally {
             if (preparedStmt != null) {
                 preparedStmt.close();
