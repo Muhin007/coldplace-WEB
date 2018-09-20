@@ -2,6 +2,7 @@ package com.github.muhin007.coldplaceweb.servlets;
 
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
+import com.github.muhin007.coldplaceweb.data.AccountService;
 import com.github.muhin007.coldplaceweb.data.ReadDB;
 import com.github.muhin007.coldplaceweb.data.User;
 import com.github.muhin007.coldplaceweb.data.WriteToDB;
@@ -15,6 +16,12 @@ import java.util.Map;
 
 public class RegistrationServlet extends HttpServlet {
 
+    private final AccountService accountService;
+
+    public RegistrationServlet(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
     public static String login;
     public static String pass;
     public static String email;
@@ -23,16 +30,29 @@ public class RegistrationServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
 
-        Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
-                    pageVariables.put("login", "");
-                    pageVariables.put("pass", "");
-                    pageVariables.put("email", "");
-                    pageVariables.put("role", "");
-                    resp.getWriter().println(PageGenerator.instance().
-                            getPage("registration.html", pageVariables));
-                }
-        );
+        String sessionId = request.getSession().getId();
+        User profile = accountService.getUserBySessionId(sessionId);
+
+        if (profile == null) {
+            Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        response.sendRedirect(request.getContextPath() + "/*");
+                        return;
+                    }
+            );
+        } else {
+
+            Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
+                        Map<String, Object> pageVariables = createPageVariablesMap(req);
+                        pageVariables.put("login", "");
+                        pageVariables.put("pass", "");
+                        pageVariables.put("email", "");
+                        pageVariables.put("role", "");
+                        resp.getWriter().println(PageGenerator.instance().
+                                getPage("registration.html", pageVariables));
+                    }
+            );
+        }
     }
 
     public void doPost(HttpServletRequest request,
