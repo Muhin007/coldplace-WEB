@@ -1,8 +1,7 @@
 package com.github.muhin007.coldplaceweb.data;
 
-import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.dbservice.DBService;
-import com.github.muhin007.coldplaceweb.servlets.RegistrationServlet;
+import com.github.muhin007.coldplaceweb.servlets.SignInServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -10,9 +9,6 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.HashMap;
-
-import static java.sql.DriverManager.println;
 
 
 public class WriteToDB {
@@ -34,7 +30,7 @@ public class WriteToDB {
         }
     }
 
-    public static void writeUserToDB() throws SQLException {
+    public static void writeUserProfileToDB() throws SQLException {
 
         PreparedStatement preparedStmt = null;
 
@@ -45,34 +41,32 @@ public class WriteToDB {
             con = DBService.getConnection();
             con.setAutoCommit(false);
             preparedStmt = (PreparedStatement) con.prepareStatement(query);
-            preparedStmt.setString(1, RegistrationServlet.login);
-            preparedStmt.execute();
-            preparedStmt.setString(2, RegistrationServlet.pass);
-            preparedStmt.execute();
-            preparedStmt.setString(3, RegistrationServlet.email);
-            preparedStmt.execute();
-            preparedStmt.setString(4, RegistrationServlet.role);
+            preparedStmt.setString(1, SignInServlet.login);
+            preparedStmt.setString(2, SignInServlet.pass);
+            preparedStmt.setString(3, SignInServlet.email);
+            preparedStmt.setString(4, SignInServlet.role);
             preparedStmt.executeUpdate();
             con.commit();
 
         } catch (Exception e) {
-            if (con != null) {
-
-                try {
-                    con.rollback();
-                } catch (Exception ex) {
-                    log.error("Произошла ошибка. Подробности смотри в log-файле", ex);
-                }
-                println(PageGenerator.instance().getPage("noRegistrationData.html", new HashMap<>()));
-                log.error("Ошибка записи в БД. Не все данные введены в форму.", e);
-                return;
-            }
-
+            con.rollback();
+//            if (con != null) {
+//
+//                try {
+//                    con.rollback();
+//                } catch (Exception ex) {
+//                    log.error("Произошла ошибка. Подробности смотри в log-файле", ex);
+//                }
+//                println(PageGenerator.instance().getPage("noRegistrationData.html", new HashMap<>()));
+//                log.error("Ошибка записи в БД. Не все данные введены в форму.", e);
+//                return;
+//            }
+//
         } finally {
             if (preparedStmt != null) {
                 preparedStmt.close();
             }
-            con.setAutoCommit(true);
+
 
         }
     }

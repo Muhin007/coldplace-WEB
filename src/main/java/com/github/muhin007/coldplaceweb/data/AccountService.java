@@ -4,28 +4,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AccountService {
-    private final Map<String, User> loginToProfile;
-    private final Map<String, User> sessionIdToProfile;
+    private final Map<String, UserProfile> loginToProfile;
+    private final Map<String, UserProfile> sessionIdToProfile;
 
     public AccountService() {
         loginToProfile = new HashMap<>();
         sessionIdToProfile = new HashMap<>();
     }
 
-    public void addNewUser(User user) {
-        loginToProfile.put(user.getLogin(), user);
+    public void addNewUser(UserProfile userProfile) {
+        loginToProfile.put(userProfile.getLogin(), userProfile);
     }
 
-    public User getUserByLogin(String login) {
+    public UserProfile getUserByLogin(String login) {
         return loginToProfile.get(login);
     }
 
-    public User getUserBySessionId(String sessionId) {
+    public UserProfile getUserBySessionId(String sessionId) {
         return sessionIdToProfile.get(sessionId);
     }
 
-    public void addSession(String sessionId, User user) {
-        sessionIdToProfile.put(sessionId, user);
+    public void addSession(String sessionId, UserProfile userProfile) {
+        sessionIdToProfile.put(sessionId, userProfile);
     }
 
     public void deleteSession(String sessionId) {

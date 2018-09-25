@@ -1,7 +1,7 @@
 package com.github.muhin007.coldplaceweb.servlets;
 
 import com.github.muhin007.coldplaceweb.data.AccountService;
-import com.github.muhin007.coldplaceweb.data.User;
+import com.github.muhin007.coldplaceweb.data.UserProfile;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServlet;
@@ -20,7 +20,7 @@ public class SessionsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
         String sessionId = request.getSession().getId();
-        User profile = accountService.getUserBySessionId(sessionId);
+        UserProfile profile = accountService.getUserBySessionId(sessionId);
         if (profile == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -44,7 +44,7 @@ public class SessionsServlet extends HttpServlet {
             return;
         }
 
-        User profile = accountService.getUserByLogin(login);
+        UserProfile profile = accountService.getUserByLogin(login);
         if (profile == null || !profile.getPass().equals(pass)) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -62,7 +62,7 @@ public class SessionsServlet extends HttpServlet {
     public void doDelete(HttpServletRequest request,
                          HttpServletResponse response) throws IOException {
         String sessionId = request.getSession().getId();
-        User profile = accountService.getUserBySessionId(sessionId);
+        UserProfile profile = accountService.getUserBySessionId(sessionId);
         if (profile == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
