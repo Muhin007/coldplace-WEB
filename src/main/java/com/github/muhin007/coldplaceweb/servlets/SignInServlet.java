@@ -17,6 +17,9 @@ import java.util.Map;
 public class SignInServlet extends HttpServlet {
     public static String login;
     public static String pass;
+    public  static String email;
+    public static String role;
+
 
     //   private final AccountService accountService;
 
@@ -37,10 +40,10 @@ public class SignInServlet extends HttpServlet {
         );
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    login = request.getParameter("login");
-                    pass = request.getParameter("pass");
+                    login = req.getParameter("login");
+                    pass = req.getParameter("pass");
 
                     if (login == null || pass == null) {
                         Map<String, Object> pageVariables = createPageVariablesMap(req);

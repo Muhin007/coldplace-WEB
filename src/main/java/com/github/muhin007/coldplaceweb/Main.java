@@ -22,8 +22,9 @@ public class Main {
         org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.addServlet(new ServletHolder(new StartServlet()), "/*");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
-        context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new SignInServlet()), "/signin");
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
         context.addServlet(new ServletHolder(new SearchCityColdplaceServlet()), "/search");
         context.addServlet(new ServletHolder(new URLColdplaceServlet()), "/URLRead");
