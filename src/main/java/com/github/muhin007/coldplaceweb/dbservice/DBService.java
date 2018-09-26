@@ -1,8 +1,12 @@
 package com.github.muhin007.coldplaceweb.dbservice;
 
+import com.github.muhin007.coldplaceweb.data.UsersDataSet;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import static com.github.muhin007.coldplaceweb.servlets.SignUpServlet.role;
 
 
 public class DBService {
@@ -18,5 +22,13 @@ public class DBService {
             return connection;
 
     }
+
+    public void addUser(String login, String pass, String email) {
+    }
+
+    public UsersDataSet getUserByLogin(String login) {
+        return null;
+    }
+
 }
 

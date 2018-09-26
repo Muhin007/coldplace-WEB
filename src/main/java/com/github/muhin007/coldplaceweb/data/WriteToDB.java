@@ -2,6 +2,7 @@ package com.github.muhin007.coldplaceweb.data;
 
 import com.github.muhin007.coldplaceweb.dbservice.DBService;
 import com.github.muhin007.coldplaceweb.servlets.SignInServlet;
+import com.github.muhin007.coldplaceweb.servlets.SignUpServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -41,33 +42,28 @@ public class WriteToDB {
             con = DBService.getConnection();
             con.setAutoCommit(false);
             preparedStmt = (PreparedStatement) con.prepareStatement(query);
-            preparedStmt.setString(1, SignInServlet.login);
-            preparedStmt.setString(2, SignInServlet.pass);
-            preparedStmt.setString(3, SignInServlet.email);
-            preparedStmt.setString(4, SignInServlet.role);
+            preparedStmt.setString(1, SignUpServlet.login);
+            preparedStmt.setString(2, SignUpServlet.pass);
+            preparedStmt.setString(3, SignUpServlet.email);
+            preparedStmt.setString(4, SignUpServlet.role);
             preparedStmt.executeUpdate();
             con.commit();
 
         } catch (Exception e) {
-            con.rollback();
-//            if (con != null) {
-//
-//                try {
-//                    con.rollback();
-//                } catch (Exception ex) {
-//                    log.error("Произошла ошибка. Подробности смотри в log-файле", ex);
-//                }
-//                println(PageGenerator.instance().getPage("noRegistrationData.html", new HashMap<>()));
-//                log.error("Ошибка записи в БД. Не все данные введены в форму.", e);
-//                return;
-//            }
-//
+
+            if (con != null) {
+                try {
+                    con.rollback();
+                } catch (Exception ex) {
+                    log.error("Произошла ошибка. Подробности смотри в log-файле", ex);
+                }
+                con.rollback();
+            }
+
         } finally {
             if (preparedStmt != null) {
                 preparedStmt.close();
             }
-
-
         }
     }
 }

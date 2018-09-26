@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.muhin007.coldplaceweb.servlets.SignInServlet.*;
+
 public class ReadDB {
 
     public static List<City> readCityFromDB() throws SQLException {
@@ -57,7 +59,7 @@ public class ReadDB {
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                UserProfile userProfile = new UserProfile();
+                UserProfile userProfile = new UserProfile(login, pass, email, role);
                 userProfile.setLogin(rs.getString("login"));
                 userProfile.setPass(rs.getString("pass"));
                 userProfile.setEmail(rs.getString("email"));
