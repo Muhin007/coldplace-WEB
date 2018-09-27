@@ -8,7 +8,6 @@ import com.github.muhin007.coldplaceweb.data.UserProfile;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -17,15 +16,8 @@ import java.util.Map;
 public class SignInServlet extends HttpServlet {
     public static String login;
     public static String pass;
-    public  static String email;
+    public static String email;
     public static String role;
-
-
-    //   private final AccountService accountService;
-
-    //   public SignInServlet(AccountService accountService) {
-    //       this.accountService = accountService;
-//    }
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
@@ -70,18 +62,11 @@ public class SignInServlet extends HttpServlet {
                                 resp.getWriter().println(PageGenerator.instance().
                                         getPage("repeatedRegistration.html", pageVariables));
                             }
-
                         }
-
                     }
-
                 }
-
-
         );
-
     }
-
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
