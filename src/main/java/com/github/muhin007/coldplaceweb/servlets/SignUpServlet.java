@@ -3,6 +3,7 @@ package com.github.muhin007.coldplaceweb.servlets;
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
 import com.github.muhin007.coldplaceweb.data.AccountService;
+import com.github.muhin007.coldplaceweb.data.ReadDB;
 import com.github.muhin007.coldplaceweb.data.UserProfile;
 import com.github.muhin007.coldplaceweb.data.WriteToDB;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SignUpServlet extends HttpServlet {
@@ -43,33 +45,42 @@ public class SignUpServlet extends HttpServlet {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
+                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+
                     login = req.getParameter("login");
                     pass = req.getParameter("pass");
                     email = req.getParameter("email");
                     role = req.getParameter("role");
 
                     if (login == null || login.trim().isEmpty() || pass == null || pass.trim().isEmpty()) {
-                        Map<String, Object> pageVariables = createPageVariablesMap(req);
+
                         pageVariables.put("message", "Вы ввели не все данные в форму. Попробуйте еще раз.");
                         resp.getWriter().println(PageGenerator.instance().
-                                getPage("repeatedRegistration.html", pageVariables));
+                                getPage("repeatedSignUp.html", pageVariables));
                         return;
                     } else {
-                        WriteToDB.writeUserProfileToDB();
-                    }
+                        List<UserProfile> users = ReadDB.readUserFromDB();
+                        UserProfile foundedUser = null;
+                        for (UserProfile user : users) {
+                            if (login.equals(user.getLogin())) {
+                                foundedUser = user;
+                                break;
+                            }
+                        }
 
-                    UserProfile userProfile = accountService.getUserByLogin(login);
-                    if (userProfile != null) {
-                        response.setContentType("text/html;charset=utf-8");
-                        response.getWriter().println("Этот логин уже занят, выберите другой.");
-                        response.setStatus(HttpServletResponse.SC_OK);
-                        return;
-                    }
+                        if (foundedUser != null) {
+                            pageVariables.put("message", "Этот логин уже занят, выберите другой.");
+                            resp.getWriter().println(PageGenerator.instance().
+                                    getPage("repeatedSignUp.html", pageVariables));
 
-                    accountService.addNewUser(new UserProfile(login, pass, email, role));
-                    response.setContentType("text/html;charset=utf-8");
-                    response.getWriter().println("Регистрация успешно пройдена успешно.");
-                    response.setStatus(HttpServletResponse.SC_OK);
+                        } else {
+                            WriteToDB.writeUserProfileToDB();
+
+                            pageVariables.put("message", "Спасибо за регистрацию.");
+                            resp.getWriter().println(PageGenerator.instance().
+                                    getPage("registrationAnswer.html", pageVariables));
+                        }
+                    }
                 }
         );
     }

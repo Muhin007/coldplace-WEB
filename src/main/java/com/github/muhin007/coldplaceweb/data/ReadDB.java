@@ -59,7 +59,7 @@ public class ReadDB {
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                UserProfile userProfile = new UserProfile(login, pass, email, role);
+                UserProfile userProfile = new UserProfile(login, pass);
                 userProfile.setLogin(rs.getString("login"));
                 userProfile.setPass(rs.getString("pass"));
                 userProfile.setEmail(rs.getString("email"));
