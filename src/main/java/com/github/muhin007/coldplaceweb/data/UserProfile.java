@@ -10,11 +10,7 @@ public class UserProfile implements Serializable {
     private String role;
 
 
-    public UserProfile(String login, String pass, String email, String role) {
-
-    }
-
-    public UserProfile(Object login, Object password) {
+    public UserProfile(String login, String password) {
     }
 
     public void setLogin(String login) {

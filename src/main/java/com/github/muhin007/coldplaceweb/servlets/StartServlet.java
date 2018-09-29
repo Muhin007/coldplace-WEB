@@ -2,7 +2,6 @@ package com.github.muhin007.coldplaceweb.servlets;
 
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
-import com.github.muhin007.coldplaceweb.data.AccountService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

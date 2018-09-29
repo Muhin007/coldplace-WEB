@@ -2,7 +2,6 @@ package com.github.muhin007.coldplaceweb.servlets;
 
 import com.github.muhin007.coldplaceweb.PageGenerator;
 import com.github.muhin007.coldplaceweb.Process;
-import com.github.muhin007.coldplaceweb.data.AccountService;
 import com.github.muhin007.coldplaceweb.data.ReadDB;
 import com.github.muhin007.coldplaceweb.data.UserProfile;
 import com.github.muhin007.coldplaceweb.data.WriteToDB;
@@ -20,11 +19,6 @@ public class SignUpServlet extends HttpServlet {
     public static String email;
     public static String role;
 
-    private final AccountService accountService;
-
-    public SignUpServlet(AccountService accountService) {
-        this.accountService = accountService;
-    }
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
