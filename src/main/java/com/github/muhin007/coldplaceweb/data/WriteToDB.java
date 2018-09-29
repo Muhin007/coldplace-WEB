@@ -1,7 +1,6 @@
 package com.github.muhin007.coldplaceweb.data;
 
-import com.github.muhin007.coldplaceweb.dbservice.DBService;
-import com.github.muhin007.coldplaceweb.servlets.SignInServlet;
+import com.github.muhin007.coldplaceweb.dbService.DBService;
 import com.github.muhin007.coldplaceweb.servlets.SignUpServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import com.mysql.jdbc.PreparedStatement;

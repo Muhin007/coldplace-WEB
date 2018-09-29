@@ -1,7 +1,7 @@
 package com.github.muhin007.coldplaceweb.data;
 
 
-import com.github.muhin007.coldplaceweb.dbservice.DBService;
+import com.github.muhin007.coldplaceweb.dbService.DBService;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -1,9 +1,5 @@
 package com.github.muhin007.coldplaceweb;
 
-
-
-import com.github.muhin007.coldplaceweb.data.AccountService;
-import com.github.muhin007.coldplaceweb.dbservice.DBService;
 import com.github.muhin007.coldplaceweb.servlets.*;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -15,15 +11,12 @@ import org.eclipse.jetty.servlet.ServletHolder;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        DBService loginToProfile = null;
-        AccountService accountService = new AccountService(loginToProfile);
-
         freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
         org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new StartServlet()), "/*");
-        context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
+        context.addServlet(new ServletHolder(new SignUpServlet()), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet()), "/signin");
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
         context.addServlet(new ServletHolder(new SearchCityColdplaceServlet()), "/search");

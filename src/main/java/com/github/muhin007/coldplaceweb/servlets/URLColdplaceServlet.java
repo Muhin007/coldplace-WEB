@@ -110,22 +110,16 @@ public class URLColdplaceServlet extends HttpServlet {
                         pageVariables.put("maxTempCity", maxTempCity);
                         resp.getWriter().println(PageGenerator.instance().
                                 getPage("URLReadPageAnswer.html", pageVariables));
-
-
                     }
-
                 }
-
         );
     }
-
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
         pageVariables.put("parameters", request.getParameterMap().toString());
         return pageVariables;
     }
-
 }
 
 
