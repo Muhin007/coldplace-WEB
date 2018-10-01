@@ -61,6 +61,10 @@ public class SignInServlet extends HttpServlet {
                             pageVariables.put("message", "Пользователь " + login + " Добро пожаловать в систему.");
                             resp.getWriter().println(PageGenerator.instance().
                                     getPage("registrationAnswer.html", pageVariables));
+                        }else {
+                            pageVariables.put("message", "Неверный логин или пароль");
+                            resp.getWriter().println(PageGenerator.instance().
+                                    getPage("repeatedSignIn.html", pageVariables));
                         }
                     }
 
