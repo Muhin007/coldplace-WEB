@@ -32,7 +32,7 @@ public class Main {
         server.setHandler(handlers);
 
         server.start();
-        System.out.println("Сервер запущен http://localhost:8080");
+        System.out.println("Сервер запущен http://localhost:8080/start");
         server.join();
     }
 }
