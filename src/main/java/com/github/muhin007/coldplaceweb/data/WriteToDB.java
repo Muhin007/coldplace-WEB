@@ -29,7 +29,7 @@ public class WriteToDB {
         }
     }
 
-    public static void addUserProfile(String login, String pass, String email, String role) throws SQLException {
+    public static void addUserProfile(String login, String pass, String email, String role) {
 
         PreparedStatement preparedStmt = null;
 
@@ -47,20 +47,29 @@ public class WriteToDB {
             preparedStmt.executeUpdate();
             con.commit();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            log.error("Произошла ошибка. Подробности смотри в log-файле", e);
 
             if (con != null) {
                 try {
                     con.rollback();
-                } catch (Exception ex) {
-                    log.error("Произошла ошибка. Подробности смотри в log-файле", ex);
+                } catch (Exception e1) {
+                    log.error("Произошла ошибка. Подробности смотри в log-файле", e1);
                 }
-                con.rollback();
+                try {
+                    con.rollback();
+                } catch (SQLException e2) {
+                    log.error("Произошла ошибка. Подробности смотри в log-файле", e2);
+                }
             }
 
         } finally {
             if (preparedStmt != null) {
-                preparedStmt.close();
+                try {
+                    preparedStmt.close();
+                } catch (SQLException e) {
+                    log.error("Произошла ошибка. Подробности смотри в log-файле", e);
+                }
             }
         }
     }
