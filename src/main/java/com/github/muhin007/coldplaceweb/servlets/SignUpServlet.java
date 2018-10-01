@@ -59,7 +59,7 @@ public class SignUpServlet extends HttpServlet {
                                     getPage("repeatedSignUp.html", pageVariables));
 
                         } else {
-                            WriteToDB.writeUserProfileToDB(login, pass, email, role);
+                            WriteToDB.addUserProfile(login, pass, email, role);
 
                             pageVariables.put("message", "Спасибо за регистрацию.");
                             resp.getWriter().println(PageGenerator.instance().

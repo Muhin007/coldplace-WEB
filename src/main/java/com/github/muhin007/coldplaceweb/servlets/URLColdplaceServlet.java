@@ -102,7 +102,7 @@ public class URLColdplaceServlet extends HttpServlet {
                             }
                         });
 
-                        WriteToDB.writeToDB();
+                        WriteToDB.addTemp();
 
                         pageVariables.put("cityName", cityName);
                         pageVariables.put("cityTemp", cityTemp);

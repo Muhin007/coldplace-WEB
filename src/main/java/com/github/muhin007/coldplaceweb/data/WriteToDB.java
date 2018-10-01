@@ -1,7 +1,6 @@
 package com.github.muhin007.coldplaceweb.data;
 
 import com.github.muhin007.coldplaceweb.dbService.DBService;
-import com.github.muhin007.coldplaceweb.servlets.SignUpServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -14,7 +13,7 @@ import java.sql.Timestamp;
 public class WriteToDB {
     private static final Logger log = Logger.getLogger(WriteToDB.class);
 
-    public static void writeToDB() throws Exception {
+    public static void addTemp() throws Exception {
         String query = "INSERT INTO coldplace.cityTemp (city, temp, date) \n" +
                 " VALUES (?, ?, ?);";
 
@@ -30,7 +29,7 @@ public class WriteToDB {
         }
     }
 
-    public static void writeUserProfileToDB(String login, String pass, String email, String role) throws SQLException {
+    public static void addUserProfile(String login, String pass, String email, String role) throws SQLException {
 
         PreparedStatement preparedStmt = null;
 
