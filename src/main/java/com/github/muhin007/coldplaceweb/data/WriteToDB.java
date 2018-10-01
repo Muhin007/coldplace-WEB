@@ -30,7 +30,7 @@ public class WriteToDB {
         }
     }
 
-    public static void writeUserProfileToDB() throws SQLException {
+    public static void writeUserProfileToDB(String login, String pass, String email, String role) throws SQLException {
 
         PreparedStatement preparedStmt = null;
 
@@ -41,10 +41,10 @@ public class WriteToDB {
             con = DBService.getConnection();
             con.setAutoCommit(false);
             preparedStmt = (PreparedStatement) con.prepareStatement(query);
-            preparedStmt.setString(1, SignUpServlet.login);
-            preparedStmt.setString(2, SignUpServlet.pass);
-            preparedStmt.setString(3, SignUpServlet.email);
-            preparedStmt.setString(4, SignUpServlet.role);
+            preparedStmt.setString(1, login);
+            preparedStmt.setString(2, pass);
+            preparedStmt.setString(3, email);
+            preparedStmt.setString(4, role);
             preparedStmt.executeUpdate();
             con.commit();
 
