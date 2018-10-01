@@ -35,11 +35,10 @@ public class ReadDB {
 
     public static List<Temp> readTempFromDB() throws SQLException {
         String query = "select * from cityTemp";
-        List<Temp> temps = null;
+        List<Temp> temps = new ArrayList<>();
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-            temps = new ArrayList<>();
             while (rs.next()) {
                 Temp temp = new Temp();
                 temp.setID(rs.getInt("id"));
@@ -59,6 +58,8 @@ public class ReadDB {
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
+                String login = null;
+                String pass = null;
                 UserProfile userProfile = new UserProfile(login, pass);
                 userProfile.setLogin(rs.getString("login"));
                 userProfile.setPass(rs.getString("pass"));
