@@ -13,18 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 public class SignInServlet extends HttpServlet {
-    public static String login;
-    public static String pass;
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
-                    pageVariables.put("login", "");
-                    pageVariables.put("pass", "");
+                    Map<String, Object> pageVariables = new HashMap<>();
                     resp.getWriter().println(PageGenerator.instance().
-                            getPage("signin.html", pageVariables));
+                            getPage("signIn.html", pageVariables));
                 }
         );
     }
@@ -34,8 +30,8 @@ public class SignInServlet extends HttpServlet {
 
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
-                    login = req.getParameter("login");
-                    pass = req.getParameter("pass");
+                    String login = req.getParameter("login");
+                    String pass = req.getParameter("pass");
 
                     if (login == null || pass == null) {
 
@@ -74,7 +70,7 @@ public class SignInServlet extends HttpServlet {
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("parameters", request.getParameterMap().toString());
+        pageVariables.put(null, request.getParameterMap().toString());
         return pageVariables;
     }
 }
