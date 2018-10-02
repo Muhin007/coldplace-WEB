@@ -44,24 +44,20 @@ public class SignInServlet extends HttpServlet {
                         List<UserProfile> users = ReadDB.readUserFromDB();
 
                         UserProfile foundedUser = null;
-                        UserProfile foundedPass = null;
 
                         for (UserProfile user : users) {
                             if (login.equals(user.getLogin())) {
                                 foundedUser = user;
                             }
                         }
-                        for (UserProfile password : users) {
-                            if (pass.equals(password.getPass())) {
-                                foundedPass = password;
-                            }
-                        }
-                        if (foundedUser != null && foundedPass != null) {
+
+                        if (foundedUser != null && foundedUser.getPass().equals(pass)) {
 
                             pageVariables.put("message", "Пользователь " + login + " Добро пожаловать в систему.");
                             resp.getWriter().println(PageGenerator.instance().
                                     getPage("registrationAnswer.html", pageVariables));
-                        }else {
+                        }
+                        else {
                             pageVariables.put("message", "Неверный логин или пароль");
                             resp.getWriter().println(PageGenerator.instance().
                                     getPage("repeatedSignIn.html", pageVariables));
