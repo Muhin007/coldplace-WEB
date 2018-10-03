@@ -28,7 +28,7 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+                    Map<String, Object> pageVariables = new HashMap<>();
 
                     String login = req.getParameter("login");
                     String pass = req.getParameter("pass");
@@ -56,8 +56,7 @@ public class SignInServlet extends HttpServlet {
                             pageVariables.put("message", "Пользователь " + login + " Добро пожаловать в систему.");
                             resp.getWriter().println(PageGenerator.instance().
                                     getPage("registrationAnswer.html", pageVariables));
-                        }
-                        else {
+                        } else {
                             pageVariables.put("message", "Неверный логин или пароль");
                             resp.getWriter().println(PageGenerator.instance().
                                     getPage("repeatedSignIn.html", pageVariables));
@@ -68,9 +67,4 @@ public class SignInServlet extends HttpServlet {
         );
     }
 
-    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put(null, request.getParameterMap().toString());
-        return pageVariables;
-    }
 }

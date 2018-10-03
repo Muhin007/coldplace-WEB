@@ -57,20 +57,18 @@ public class ReadDB {
         return temps;
     }
 
-    public  static List<UserProfile> readUserFromDB() {
+    public static List<UserProfile> readUserFromDB() {
         String query = "select * from users";
         List<UserProfile> userProfiles = new ArrayList<>();
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                String login = null;
-                String pass = null;
-                UserProfile userProfile = new UserProfile(login, pass);
-                userProfile.setLogin(rs.getString("login"));
-                userProfile.setPass(rs.getString("pass"));
-                userProfile.setEmail(rs.getString("email"));
-                userProfile.setRole(rs.getString("role"));
+                UserProfile userProfile = new UserProfile(
+                        rs.getString("login"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("role"));
                 userProfiles.add(userProfile);
             }
         } catch (SQLException e) {

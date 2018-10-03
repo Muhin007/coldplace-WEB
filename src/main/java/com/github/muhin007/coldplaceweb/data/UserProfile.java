@@ -10,22 +10,10 @@ public class UserProfile implements Serializable {
     private String role;
 
 
-    public UserProfile(String login, String pass) {
-    }
-
-    public void setLogin(String login) {
+    public UserProfile(String login, String pass, String email, String role) {
         this.login = login;
-    }
-
-    public void setPass(String pass) {
         this.pass = pass;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
-    }
-
-    public  void setRole (String role) {
         this.role = role;
     }
 
@@ -47,8 +35,9 @@ public class UserProfile implements Serializable {
 
     @Override
     public String toString() {
-        return login + " " + "******" + " " + email + " " + role ;
+        return login + " " + "******" + " " + email + " " + role;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

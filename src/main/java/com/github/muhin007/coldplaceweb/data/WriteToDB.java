@@ -53,13 +53,8 @@ public class WriteToDB {
             if (con != null) {
                 try {
                     con.rollback();
-                } catch (Exception e1) {
-                    log.error("Произошла ошибка. Подробности смотри в log-файле", e1);
-                }
-                try {
-                    con.rollback();
-                } catch (SQLException e2) {
-                    log.error("Произошла ошибка. Подробности смотри в log-файле", e2);
+                } catch (SQLException ex) {
+                    log.error("Произошла ошибка. Подробности смотри в log-файле", ex);
                 }
             }
 

@@ -19,7 +19,7 @@ public class SignUpServlet extends HttpServlet {
                       HttpServletResponse response) {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+                    Map<String, Object> pageVariables = new HashMap<>();
                     resp.getWriter().println(PageGenerator.instance().
                             getPage("signUp.html", pageVariables));
                 }
@@ -30,7 +30,7 @@ public class SignUpServlet extends HttpServlet {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+                    Map<String, Object> pageVariables = new HashMap<>();
 
                     String login = req.getParameter("login");
                     String pass = req.getParameter("pass");
@@ -68,11 +68,5 @@ public class SignUpServlet extends HttpServlet {
                     }
                 }
         );
-    }
-
-    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put(null, request.getParameterMap());
-        return pageVariables;
     }
 }
