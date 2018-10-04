@@ -1,5 +1,6 @@
 package com.github.muhin007.coldplaceweb.dbservice;
 
+import com.github.muhin007.coldplaceweb.dbService.DBService;
 import org.junit.Assert;
 import org.junit.Test;
 
