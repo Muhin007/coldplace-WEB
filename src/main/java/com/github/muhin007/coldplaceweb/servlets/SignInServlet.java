@@ -8,23 +8,20 @@ import com.github.muhin007.coldplaceweb.data.UserProfile;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class SignInServlet extends HttpServlet {
-    public static String login;
-    public static String pass;
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
-                    pageVariables.put("login", "");
-                    pageVariables.put("pass", "");
+                    Map<String, Object> pageVariables = new HashMap<>();
                     resp.getWriter().println(PageGenerator.instance().
-                            getPage("signin.html", pageVariables));
+                            getPage("signIn.html", pageVariables));
                 }
         );
     }
@@ -32,10 +29,10 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+                    Map<String, Object> pageVariables = new HashMap<>();
 
-                    login = req.getParameter("login");
-                    pass = req.getParameter("pass");
+                    String login = req.getParameter("login");
+                    String pass = req.getParameter("pass");
 
                     if (login == null || pass == null) {
 
@@ -48,23 +45,25 @@ public class SignInServlet extends HttpServlet {
                         List<UserProfile> users = ReadDB.readUserFromDB();
 
                         UserProfile foundedUser = null;
-                        UserProfile foundedPass = null;
 
                         for (UserProfile user : users) {
                             if (login.equals(user.getLogin())) {
                                 foundedUser = user;
                             }
                         }
-                        for (UserProfile password : users) {
-                            if (pass.equals(password.getPass())) {
-                                foundedPass = password;
-                            }
-                        }
-                        if (foundedUser != null && foundedPass != null) {
 
-                            pageVariables.put("message", "Пользователь " + login + " Добро пожаловать в систему.");
+                        if (foundedUser != null && foundedUser.getPass().equals(pass)) {
+
+                            HttpSession session = req.getSession();
+                           session.setAttribute("user", login);
+
+                            pageVariables.put("message", "Пользователь " + session.getAttribute("user") + " Добро пожаловать в систему.");
                             resp.getWriter().println(PageGenerator.instance().
                                     getPage("registrationAnswer.html", pageVariables));
+                        } else {
+                            pageVariables.put("message", "Неверный логин или пароль");
+                            resp.getWriter().println(PageGenerator.instance().
+                                    getPage("repeatedSignIn.html", pageVariables));
                         }
                     }
 
@@ -72,9 +71,4 @@ public class SignInServlet extends HttpServlet {
         );
     }
 
-    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("parameters", request.getParameterMap().toString());
-        return pageVariables;
-    }
 }

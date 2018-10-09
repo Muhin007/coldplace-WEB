@@ -10,22 +10,12 @@ public class UserProfile implements Serializable {
     private String role;
 
 
-    public UserProfile(String login, String password) {
-    }
-
-    public void setLogin(String login) {
+    public UserProfile(String login, String pass, String email, String role) {
         this.login = login;
-    }
-
-    public void setPass(String pass) {
         this.pass = pass;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
+        this.role = role;
     }
-
-    public  void setRole (String role) {this.role = role; }
 
     public String getLogin() {
         return login;
@@ -39,12 +29,15 @@ public class UserProfile implements Serializable {
         return email;
     }
 
-    public String getRole() {return role; }
+    public String getRole() {
+        return role;
+    }
 
     @Override
     public String toString() {
-        return login + " " + pass + " " + email + " " + role ;
+        return login + " " + "******" + " " + email + " " + role;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,7 +1,8 @@
 package com.github.muhin007.coldplaceweb.data;
 
 
-import com.github.muhin007.coldplaceweb.dbservice.DBService;
+import com.github.muhin007.coldplaceweb.dbService.DBService;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,8 +14,9 @@ import java.util.List;
 import static com.github.muhin007.coldplaceweb.servlets.SignInServlet.*;
 
 public class ReadDB {
+    private static final Logger log = Logger.getLogger(ReadDB.class);
 
-    public static List<City> readCityFromDB() throws SQLException {
+    public static List<City> readCityFromDB() {
         String query = "select * from city";
         List<City> cities = new ArrayList<>();
         try (Connection con = DBService.getConnection();
@@ -29,17 +31,18 @@ public class ReadDB {
                 city.setURL(rs.getString("url"));
                 cities.add(city);
             }
+        } catch (SQLException e) {
+            log.error("Произошла ошибка. Подробности смотри в log-файле", e);
         }
         return cities;
     }
 
-    public static List<Temp> readTempFromDB() throws SQLException {
+    public static List<Temp> readTempFromDB() {
         String query = "select * from cityTemp";
-        List<Temp> temps = null;
+        List<Temp> temps = new ArrayList<>();
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-            temps = new ArrayList<>();
             while (rs.next()) {
                 Temp temp = new Temp();
                 temp.setID(rs.getInt("id"));
@@ -48,24 +51,28 @@ public class ReadDB {
                 temp.setDate(rs.getString("date"));
                 temps.add(temp);
             }
+        } catch (SQLException e) {
+            log.error("Произошла ошибка. Подробности смотри в log-файле", e);
         }
         return temps;
     }
 
-    public  static List<UserProfile> readUserFromDB() throws  SQLException {
+    public static List<UserProfile> readUserFromDB() {
         String query = "select * from users";
         List<UserProfile> userProfiles = new ArrayList<>();
         try (Connection con = DBService.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                UserProfile userProfile = new UserProfile(login, pass);
-                userProfile.setLogin(rs.getString("login"));
-                userProfile.setPass(rs.getString("pass"));
-                userProfile.setEmail(rs.getString("email"));
-                userProfile.setRole(rs.getString("role"));
+                UserProfile userProfile = new UserProfile(
+                        rs.getString("login"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("role"));
                 userProfiles.add(userProfile);
             }
+        } catch (SQLException e) {
+            log.error("Произошла ошибка. Подробности смотри в log-файле", e);
         }
         return userProfiles;
     }

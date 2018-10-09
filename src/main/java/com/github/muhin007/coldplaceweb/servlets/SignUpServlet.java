@@ -14,21 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 public class SignUpServlet extends HttpServlet {
-    public static String login;
-    public static String pass;
-    public static String email;
-    public static String role;
-
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
-                    pageVariables.put("login", "");
-                    pageVariables.put("pass", "");
-                    pageVariables.put("email", "");
-                    pageVariables.put("role", "");
+                    Map<String, Object> pageVariables = new HashMap<>();
                     resp.getWriter().println(PageGenerator.instance().
                             getPage("signUp.html", pageVariables));
                 }
@@ -39,12 +30,12 @@ public class SignUpServlet extends HttpServlet {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
-                    Map<String, Object> pageVariables = createPageVariablesMap(req);
+                    Map<String, Object> pageVariables = new HashMap<>();
 
-                    login = req.getParameter("login");
-                    pass = req.getParameter("pass");
-                    email = req.getParameter("email");
-                    role = req.getParameter("role");
+                    String login = req.getParameter("login");
+                    String pass = req.getParameter("pass");
+                    String email = req.getParameter("email");
+                    String role = req.getParameter("role");
 
                     if (login == null || login.trim().isEmpty() || pass == null || pass.trim().isEmpty()) {
 
@@ -68,7 +59,7 @@ public class SignUpServlet extends HttpServlet {
                                     getPage("repeatedSignUp.html", pageVariables));
 
                         } else {
-                            WriteToDB.writeUserProfileToDB();
+                            WriteToDB.addUserProfile(login, pass, email, role);
 
                             pageVariables.put("message", "Спасибо за регистрацию.");
                             resp.getWriter().println(PageGenerator.instance().
@@ -77,12 +68,5 @@ public class SignUpServlet extends HttpServlet {
                     }
                 }
         );
-    }
-
-
-    private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("parameters", request.getParameterMap().toString());
-        return pageVariables;
     }
 }

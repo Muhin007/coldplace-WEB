@@ -1,7 +1,6 @@
 package com.github.muhin007.coldplaceweb.data;
 
 import com.github.muhin007.coldplaceweb.dbService.DBService;
-import com.github.muhin007.coldplaceweb.servlets.SignUpServlet;
 import com.github.muhin007.coldplaceweb.servlets.URLColdplaceServlet;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.log4j.Logger;
@@ -14,7 +13,7 @@ import java.sql.Timestamp;
 public class WriteToDB {
     private static final Logger log = Logger.getLogger(WriteToDB.class);
 
-    public static void writeToDB() throws Exception {
+    public static void addTemp() throws Exception {
         String query = "INSERT INTO coldplace.cityTemp (city, temp, date) \n" +
                 " VALUES (?, ?, ?);";
 
@@ -30,7 +29,7 @@ public class WriteToDB {
         }
     }
 
-    public static void writeUserProfileToDB() throws SQLException {
+    public static void addUserProfile(String login, String pass, String email, String role) {
 
         PreparedStatement preparedStmt = null;
 
@@ -41,27 +40,31 @@ public class WriteToDB {
             con = DBService.getConnection();
             con.setAutoCommit(false);
             preparedStmt = (PreparedStatement) con.prepareStatement(query);
-            preparedStmt.setString(1, SignUpServlet.login);
-            preparedStmt.setString(2, SignUpServlet.pass);
-            preparedStmt.setString(3, SignUpServlet.email);
-            preparedStmt.setString(4, SignUpServlet.role);
+            preparedStmt.setString(1, login);
+            preparedStmt.setString(2, pass);
+            preparedStmt.setString(3, email);
+            preparedStmt.setString(4, role);
             preparedStmt.executeUpdate();
             con.commit();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            log.error("Произошла ошибка. Подробности смотри в log-файле", e);
 
             if (con != null) {
                 try {
                     con.rollback();
-                } catch (Exception ex) {
+                } catch (SQLException ex) {
                     log.error("Произошла ошибка. Подробности смотри в log-файле", ex);
                 }
-                con.rollback();
             }
 
         } finally {
             if (preparedStmt != null) {
-                preparedStmt.close();
+                try {
+                    preparedStmt.close();
+                } catch (SQLException e) {
+                    log.error("Произошла ошибка. Подробности смотри в log-файле", e);
+                }
             }
         }
     }

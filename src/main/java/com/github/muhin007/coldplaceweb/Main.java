@@ -1,7 +1,5 @@
 package com.github.muhin007.coldplaceweb;
 
-
-
 import com.github.muhin007.coldplaceweb.servlets.*;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -12,8 +10,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
-
 
         freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
         org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
@@ -36,7 +32,7 @@ public class Main {
         server.setHandler(handlers);
 
         server.start();
-        System.out.println("Сервер запущен http://localhost:8080");
+        System.out.println("Сервер запущен http://localhost:8080/start");
         server.join();
     }
 }

@@ -15,7 +15,7 @@ public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
-                    Map<String, Object> pageVariables = new HashMap<>();
+            Map<String, Object> pageVariables = new HashMap<>();
 
                     HttpSession session = req.getSession(false);
 
