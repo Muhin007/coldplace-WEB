@@ -29,6 +29,8 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
+                    HttpSession session = req.getSession();
+
                     Map<String, Object> pageVariables = new HashMap<>();
 
                     String login = req.getParameter("login");
@@ -53,10 +55,15 @@ public class SignInServlet extends HttpServlet {
                         }
 
                         if (foundedUser != null && foundedUser.getPass().equals(pass)) {
+                            session.setAttribute("user", login);
 
-                            HttpSession session = req.getSession();
-                           session.setAttribute("user", login);
+                        } else {
+                            pageVariables.put("message", "Время сессии истекло. Пройдите авторизацию снова.");
+                            resp.getWriter().println(PageGenerator.instance().
+                                    getPage("repeatedSignIn.html", pageVariables));
+                        }
 
+                        if (session.getAttribute("user") != null) {
                             pageVariables.put("message", "Пользователь " + session.getAttribute("user") + " Добро пожаловать в систему.");
                             resp.getWriter().println(PageGenerator.instance().
                                     getPage("registrationAnswer.html", pageVariables));
@@ -66,7 +73,6 @@ public class SignInServlet extends HttpServlet {
                                     getPage("repeatedSignIn.html", pageVariables));
                         }
                     }
-
                 }
         );
     }
