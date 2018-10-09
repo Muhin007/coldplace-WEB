@@ -8,6 +8,7 @@ import com.github.muhin007.coldplaceweb.data.UserProfile;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,10 @@ public class SignInServlet extends HttpServlet {
 
                         if (foundedUser != null && foundedUser.getPass().equals(pass)) {
 
-                            pageVariables.put("message", "Пользователь " + login + " Добро пожаловать в систему.");
+                            HttpSession session = req.getSession();
+                           session.setAttribute("user", login);
+
+                            pageVariables.put("message", "Пользователь " + session.getAttribute("user") + " Добро пожаловать в систему.");
                             resp.getWriter().println(PageGenerator.instance().
                                     getPage("registrationAnswer.html", pageVariables));
                         } else {

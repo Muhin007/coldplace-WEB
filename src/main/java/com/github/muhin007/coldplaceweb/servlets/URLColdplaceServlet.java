@@ -13,9 +13,9 @@ import org.jsoup.nodes.Document;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
-
 
 
 public class URLColdplaceServlet extends HttpServlet {
@@ -30,8 +30,11 @@ public class URLColdplaceServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) {
 
+        HttpSession session = request.getSession();
+
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
+                    pageVariables.put("message", "Вы вошли как пользователь " + session.getAttribute("user"));
                     pageVariables.put("cityName", "");
                     resp.getWriter().println(PageGenerator.instance().getPage("URLReadPage.html", pageVariables));
                 }
