@@ -57,10 +57,6 @@ public class SignInServlet extends HttpServlet {
                         if (foundedUser != null && foundedUser.getPass().equals(pass)) {
                             session.setAttribute("user", login);
 
-                        } else {
-                            pageVariables.put("message", "Время сессии истекло. Пройдите авторизацию снова.");
-                            resp.getWriter().println(PageGenerator.instance().
-                                    getPage("repeatedSignIn.html", pageVariables));
                         }
 
                         if (session.getAttribute("user") != null) {

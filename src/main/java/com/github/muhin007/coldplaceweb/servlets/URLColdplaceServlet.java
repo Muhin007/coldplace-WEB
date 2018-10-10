@@ -34,7 +34,7 @@ public class URLColdplaceServlet extends HttpServlet {
 
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
-                    pageVariables.put("message", "Вы вошли как пользователь " + session.getAttribute("user"));
+                    pageVariables.put("message", "Ваш логин: " + session.getAttribute("user"));
                     pageVariables.put("cityName", "");
                     resp.getWriter().println(PageGenerator.instance().getPage("URLReadPage.html", pageVariables));
                 }
@@ -45,9 +45,12 @@ public class URLColdplaceServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) {
 
+        HttpSession session = request.getSession();
+
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
+                    HttpSession ses = req.getSession();
 
                     cityName = req.getParameter("cityName");
 
@@ -107,7 +110,7 @@ public class URLColdplaceServlet extends HttpServlet {
                         });
 
                         WriteToDB.addTemp();
-
+                        pageVariables.put("message", "Ваш логин: " + session.getAttribute("user"));
                         pageVariables.put("cityName", cityName);
                         pageVariables.put("cityTemp", cityTemp);
                         pageVariables.put("minTempCity", minTempCity);
