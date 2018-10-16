@@ -62,7 +62,7 @@ public class SignInServlet extends HttpServlet {
                         if (session.getAttribute("user") != null) {
                             pageVariables.put("message", "Пользователь " + session.getAttribute("user") + " Добро пожаловать в систему.");
                             resp.getWriter().println(PageGenerator.instance().
-                                    getPage("registrationAnswer.html", pageVariables));
+                                    getPage("signInAnswer.html", pageVariables));
                         } else {
                             pageVariables.put("message", "Неверный логин или пароль");
                             resp.getWriter().println(PageGenerator.instance().

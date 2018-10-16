@@ -50,7 +50,6 @@ public class URLColdplaceServlet extends HttpServlet {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
                     Map<String, Object> pageVariables = createPageVariablesMap(req);
 
-                    HttpSession ses = req.getSession();
 
                     cityName = req.getParameter("cityName");
 
