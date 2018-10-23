@@ -8,6 +8,22 @@ public class Temp {
     private int temp;
     private String date;
 
+    public int getID() {
+        return id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public int getTemp() {
+        return temp;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
 
     void setID(int id) {
         this.id = id;
@@ -31,21 +47,6 @@ public class Temp {
         return id + " " + city + " " + temp + " " + date;
     }
 
-    public int getID() {
-        return id;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public int getTemp() {
-        return temp;
-    }
-
-    public String getDate() {
-        return date;
-    }
 
     @Override
     public boolean equals(Object o) {
