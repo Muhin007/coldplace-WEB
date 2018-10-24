@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.muhin007.coldplaceweb.servlets.SignInServlet.*;
+
 
 public class ReadDB {
     private static final Logger log = Logger.getLogger(ReadDB.class);
