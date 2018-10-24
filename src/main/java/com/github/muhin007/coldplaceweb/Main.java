@@ -9,7 +9,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String... args) throws Exception {
 
         freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
         org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
@@ -21,9 +21,11 @@ public class Main {
         context.addServlet(new ServletHolder(new ButtonColdplaceServlet()), "/button");
         context.addServlet(new ServletHolder(new SearchCityColdplaceServlet()), "/search");
         context.addServlet(new ServletHolder(new URLColdplaceServlet()), "/URLRead");
+        context.addServlet(new ServletHolder(new ApplicationPickerServlet()), "/apps");
+        context.addServlet(new ServletHolder(new LogOutServlet()), "/logout");
 
         ResourceHandler resource_handler = new ResourceHandler();
-        resource_handler.setResourceBase("templates");
+        resource_handler.setResourceBase(" ");
 
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});
@@ -35,6 +37,7 @@ public class Main {
         System.out.println("Сервер запущен http://localhost:8080/start");
         server.join();
     }
+
 }
 
 

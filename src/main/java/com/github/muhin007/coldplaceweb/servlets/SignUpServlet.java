@@ -61,9 +61,9 @@ public class SignUpServlet extends HttpServlet {
                         } else {
                             WriteToDB.addUserProfile(login, pass, email, role);
 
-                            pageVariables.put("message", "Спасибо за регистрацию.");
+                            pageVariables.put("message", "Спасибо за регистрацию. Войдите в систему");
                             resp.getWriter().println(PageGenerator.instance().
-                                    getPage("registrationAnswer.html", pageVariables));
+                                    getPage("signUpAnswer.html", pageVariables));
                         }
                     }
                 }

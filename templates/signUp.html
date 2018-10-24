@@ -1,7 +1,38 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="utf-8" />
+﻿<script type = "text/javascript" >
+    function valid_form() {
+        valid = true;
+        if (document.getElementById("login").value == "") {
+            alert("Пожалуйста заполните поле 'Логин'.");
+            valid = false;
+        } else {
+            if (document.getElementById("login").value.length < 2) {
+                alert("Длина логина не менее 2 символов. Ваш логин слишком короткий. ");
+                valid = false;
+            } else {
+                if (document.getElementById("email").value == "") {
+                    alert("Пожалуйста заполните поле 'E-mail'.");
+                    valid = false;
+                } else {
+                    if (document.getElementById("email").value.match(/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/) == null) {
+                        alert("Вы ввели неверный E-mail адрес.");
+                        valid = false;
+                    } else {
+                        if (document.getElementById("pass").value == "") {
+                            alert("Пожалуйста заполните поле 'Пароль'.");
+                            valid = false;
+                        } else {
+                            if (document.getElementById("pass").value.length < 4) {
+                                alert("Длина пароля должна быть не менее 4 символов. Ваш пароль слишком короткий.");
+                                valid = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return valid;
+    }
+</script>
     <title>Coldplaceweb</title>
 </head>
 <style>
@@ -19,12 +50,11 @@
 <p ><strong>Для начала работы нужно пройти регистрацию или авторизацию</strong></p>
 <p >&nbsp;</p>
 <p >Введи логин и пароль в форму ниже</p>
-<form method="POST">
-    <p >Логин:&nbsp;<input name="login" type="text" /></p>
-    <p >Пароль:&nbsp;<input name="pass" type="password" /></p>
-    <p >E-mail:&nbsp;<input name="email" type="text" /></p>
-    <p ><input type="hidden" name="role" value="user">
-    </select></p>
+<form method="POST" onsubmit="return valid_form();">
+    <p >Логин:&nbsp;<input name="login" type="text" id="login"/></p>
+    <p >Пароль:&nbsp;<input name="pass" type="password" id="pass"/></p>
+    <p >E-mail:&nbsp;<input name="email" type="text" id="email"/></p>
+    <p ><input type="hidden" name="role" value="1"></p>
     <p ><input type="submit" value="Регистрация" /></p>
 </form>
 </body>
