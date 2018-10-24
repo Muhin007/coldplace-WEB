@@ -15,16 +15,16 @@ public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
-            Map<String, Object> pageVariables = new HashMap<>();
+                    Map<String, Object> pageVariables = new HashMap<>();
 
                     HttpSession session = req.getSession(false);
 
                     if (session != null) {
-                        session.invalidate();
+                        session.setAttribute("user", null);
+                        //session.invalidate();
                         pageVariables.put("message", "Вы вышли из системы");
                         resp.getWriter().println(PageGenerator.instance().
                                 getPage("repeatedSignIn.html", pageVariables));
-                        System.out.println("Пользователь вышел из системы");
                     }
                 }
         );

@@ -8,6 +8,7 @@ import com.github.muhin007.coldplaceweb.data.UserProfile;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,8 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         Process.process(request, response, (HttpServletRequest req, HttpServletResponse resp) -> {
 
+                    HttpSession session = req.getSession();
+
                     Map<String, Object> pageVariables = new HashMap<>();
 
                     String login = req.getParameter("login");
@@ -39,28 +42,31 @@ public class SignInServlet extends HttpServlet {
                         resp.getWriter().println(PageGenerator.instance().
                                 getPage("repeatedSignIn.html", pageVariables));
                         return;
+                    }
+
+                    List<UserProfile> users = ReadDB.readUserFromDB();
+
+                    UserProfile foundedUser = null;
+
+                    for (UserProfile user : users) {
+                        if (login.equals(user.getLogin())) {
+                            foundedUser = user;
+                        }
+                    }
+
+                    if (foundedUser != null && foundedUser.getPass().equals(pass)) {
+                        session.setAttribute("user", login);
+
+                    }
+
+                    if (session.getAttribute("user") != null) {
+                        pageVariables.put("message", "Пользователь " + session.getAttribute("user") + " Добро пожаловать в систему.");
+                        resp.getWriter().println(PageGenerator.instance().
+                                getPage("appsPage.html", pageVariables));
                     } else {
-
-                        List<UserProfile> users = ReadDB.readUserFromDB();
-
-                        UserProfile foundedUser = null;
-
-                        for (UserProfile user : users) {
-                            if (login.equals(user.getLogin())) {
-                                foundedUser = user;
-                            }
-                        }
-
-                        if (foundedUser != null && foundedUser.getPass().equals(pass)) {
-
-                            pageVariables.put("message", "Пользователь " + login + " Добро пожаловать в систему.");
-                            resp.getWriter().println(PageGenerator.instance().
-                                    getPage("registrationAnswer.html", pageVariables));
-                        } else {
-                            pageVariables.put("message", "Неверный логин или пароль");
-                            resp.getWriter().println(PageGenerator.instance().
-                                    getPage("repeatedSignIn.html", pageVariables));
-                        }
+                        pageVariables.put("message", "Неверный логин или пароль");
+                        resp.getWriter().println(PageGenerator.instance().
+                                getPage("repeatedSignIn.html", pageVariables));
                     }
 
                 }
