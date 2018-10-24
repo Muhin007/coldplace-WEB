@@ -2,11 +2,11 @@
     function valid_form() {
         valid = true;
         if (document.getElementById("login").value == "") {
-            alert("Пожалуйста заполните поле 'login'.");
+            alert("Пожалуйста заполните поле 'Логин'.");
             valid = false;
         } else {
             if (document.getElementById("login").value.length < 2) {
-                alert("Логин слишком короткий.");
+                alert("Длина логина не менее 2 символов. Ваш логин слишком короткий. ");
                 valid = false;
             } else {
                 if (document.getElementById("email").value == "") {
@@ -14,15 +14,15 @@
                     valid = false;
                 } else {
                     if (document.getElementById("email").value.match(/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/) == null) {
-                        alert("Неверный E-mail адрес.");
+                        alert("Вы ввели неверный E-mail адрес.");
                         valid = false;
                     } else {
                         if (document.getElementById("pass").value == "") {
-                            alert("Пожалуйста заполните поле 'Pass'.");
+                            alert("Пожалуйста заполните поле 'Пароль'.");
                             valid = false;
                         } else {
                             if (document.getElementById("pass").value.length < 4) {
-                                alert("Пароль слишком короткий.");
+                                alert("Длина пароля должна быть не менее 4 символов. Ваш пароль слишком короткий.");
                                 valid = false;
                             }
                         }
