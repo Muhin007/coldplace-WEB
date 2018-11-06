@@ -1,4 +1,4 @@
-package main.java.com.github.muhin007.coldplacespring;
+package com.github.muhin007.coldplacespring;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
