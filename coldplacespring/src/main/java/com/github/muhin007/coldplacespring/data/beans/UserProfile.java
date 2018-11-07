@@ -1,4 +1,4 @@
-package com.github.muhin007.coldplacespring.data;
+package com.github.muhin007.coldplacespring.data.beans;
 
 import java.io.Serializable;
 

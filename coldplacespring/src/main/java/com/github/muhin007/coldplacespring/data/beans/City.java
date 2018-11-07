@@ -1,4 +1,4 @@
-package com.github.muhin007.coldplacespring.data;
+package com.github.muhin007.coldplacespring.data.beans;
 
 import java.util.Random;
 
@@ -13,21 +13,21 @@ public class City {
     }
 
 
-    void setID(int id) { this.id = id; }
+    public void setID(int id) { this.id = id; }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    void setMinTemperature(int minTemperature) {
+    public void setMinTemperature(int minTemperature) {
         this.min = minTemperature;
     }
 
-    void setMaxTemperature(int maxTemperature) {
+    public void setMaxTemperature(int maxTemperature) {
         this.max = maxTemperature;
     }
 
-    void setURL (String url) {
+    public void setURL(String url) {
         this.url = url;
     }
 

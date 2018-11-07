@@ -1,5 +1,8 @@
 package com.github.muhin007.coldplacespring.data;
 
+import com.github.muhin007.coldplacespring.data.beans.City;
+import com.github.muhin007.coldplacespring.data.beans.Temp;
+import com.github.muhin007.coldplacespring.data.beans.UserProfile;
 import com.github.muhin007.coldplacespring.dbService.DBService;
 import org.apache.log4j.Logger;
 

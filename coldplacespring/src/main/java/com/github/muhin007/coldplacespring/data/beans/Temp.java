@@ -1,4 +1,4 @@
-package com.github.muhin007.coldplacespring.data;
+package com.github.muhin007.coldplacespring.data.beans;
 
 
 public class Temp {
@@ -25,19 +25,19 @@ public class Temp {
     }
 
 
-    void setID(int id) {
+    public void setID(int id) {
         this.id = id;
     }
 
-    void setCity(String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    void setTemp(int temp) {
+    public void setTemp(int temp) {
         this.temp = temp;
     }
 
-    void setDate(String date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
